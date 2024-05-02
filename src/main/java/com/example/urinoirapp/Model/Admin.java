@@ -11,7 +11,6 @@ public class Admin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String username;
     private String email;
     private String password;
@@ -71,4 +70,16 @@ public class Admin {
     public void setMedecins(List<Medecin> medecins) {
         this.medecins = medecins;
     }
+
+
+    @Override
+    public String toString() {
+        return "Admin{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }
+
