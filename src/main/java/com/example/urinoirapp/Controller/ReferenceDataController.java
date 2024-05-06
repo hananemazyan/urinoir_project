@@ -1,26 +1,25 @@
 package com.example.urinoirapp.Controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.beans.factory.annotation.Autowired;
 import com.example.urinoirapp.Model.ReferenceData;
 import com.example.urinoirapp.Service.ReferenceDataService;
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Controller
 @RestController
-@RequestMapping("/api/reference-data")
+@RequestMapping("/api/referenceData")
 public class ReferenceDataController {
 
     @Autowired
     private ReferenceDataService referenceDataService;
 
-    public ReferenceDataController(ReferenceDataService referenceDataService) {
-        this.referenceDataService = referenceDataService;
-    }
-
-    @GetMapping("/all")
-    public List<ReferenceData> getAllReferenceData() {
+    @GetMapping
+    public List<ReferenceData> getReferenceData() {
         return referenceDataService.getAllReferenceData();
     }
 }

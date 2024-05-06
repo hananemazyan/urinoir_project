@@ -1,27 +1,24 @@
 package com.example.urinoirapp.Service;
 
-
 import com.example.urinoirapp.Model.ReferenceData;
-import java.util.List;
+import com.example.urinoirapp.Repository.ReferenceDataRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/**
- * Service interface for managing reference data.
- */
+import java.util.List;
+
 @Service
-public interface ReferenceDataService {
+public class ReferenceDataService {
 
-    /**
-     * Saves a list of reference data.
-     *
-     * @param referenceDataList The list of reference data to be saved.
-     */
-    void saveReferenceData(List<ReferenceData> referenceDataList);
+    @Autowired
+    private ReferenceDataRepository repository;
 
-    /**
-     * Retrieves all reference data stored in the system.
-     *
-     * @return A list of all reference data stored in the system.
-     */
-    List<ReferenceData> getAllReferenceData();
+    public String saveReferenceData(ReferenceData referenceData) {
+        repository.save(referenceData);
+        return "saved Data ";
+    }
+
+    public List<ReferenceData> getAllReferenceData() {
+        return repository.findAll();
+    }
 }

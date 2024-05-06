@@ -81,7 +81,9 @@ public class ReferenceDataInitializer {
                     new ReferenceData(0.0, 58.0),
                     new ReferenceData(0.0, 59.0)
             );
-            referenceDataService.saveReferenceData(referenceDataList);
+            for (ReferenceData referenceData : referenceDataList) {
+                referenceDataService.saveReferenceData(referenceData);
+            }
         };
     }
 }

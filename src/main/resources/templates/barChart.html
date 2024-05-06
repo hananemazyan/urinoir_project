@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Time and Volume Graph</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- Include Highcharts CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highcharts/9.3.1/css/highcharts.min.css">
+</head>
+<body>
+<div class="container">
+    <h2 align="center">Data Graph</h2>
+
+    <div id="container" style="width: 800px; height: 600px; margin: 0 auto"></div>
+</div>
+
+<!-- Include jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<!-- Include Bootstrap JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- Include Highcharts JavaScript -->
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script th:inline="javascript">
+    $(function(){
+        // Assuming you have an API endpoint that returns data in JSON format
+        $.get("/api/referenceData", function(data) {
+            var volumeData = data.map(function(entry) {
+                return [entry.time, entry.volume];
+            });
+
+            Highcharts.chart('container', {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Volume per Time'
+                },
+                xAxis: {
+                    title: {
+                        text: 'Time'
+                    }
+                },
+                yAxis: {
+                    title: {
+                        text: 'Volume'
+                    }
+                },
+                series: [{
+                    name: 'Volume',
+                    data: volumeData
+                }]
+            });
+        });
+    });
+</script>
+</body>
+</html>
