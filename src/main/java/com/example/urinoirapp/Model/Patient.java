@@ -27,8 +27,8 @@ public class Patient {
     @JoinColumn(name = "medecin_id")
     private Medecin medecin;
 
-    @ManyToMany(mappedBy = "patients")
-    private List<Rapport> rapports;
+//    @ManyToMany(mappedBy = "patients")
+//    private List<Rapport> rapports;
 
     // Getters and setters
 
@@ -102,13 +102,13 @@ public class Patient {
 
     public void setMedecin(Medecin medecin) {
         this.medecin = medecin;
-    }
+    }}
 
-    public List<Rapport> getRapports() {
-        return rapports;
-    }
-
-    public void setRapports(List<Rapport> rapports) {
-        this.rapports = rapports;
-    }
-}
+//    public List<Rapport> getRapports() {
+//        return rapports;
+//    }
+//
+//    public void setRapports(List<Rapport> rapports) {
+//        this.rapports = rapports;
+//    }
+//}

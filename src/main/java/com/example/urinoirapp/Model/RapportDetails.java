@@ -14,9 +14,9 @@ public class RapportDetails {
     private String titre;
     private String description;
 
-    @ManyToOne
-    @JoinColumn(name = "rapport_id")
-    private Rapport rapport;
+//    @ManyToOne
+//    @JoinColumn(name = "rapport_id")
+//    private Rapport rapport;
 
     // Getters and setters
 
@@ -42,13 +42,13 @@ public class RapportDetails {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Rapport getRapport() {
-        return rapport;
-    }
-
-    public void setRapport(Rapport rapport) {
-        this.rapport = rapport;
-    }
-}
+    }}
+//
+//    public Rapport getRapport() {
+//        return rapport;
+//    }
+//
+//    public void setRapport(Rapport rapport) {
+//        this.rapport = rapport;
+//    }
+//}
