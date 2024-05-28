@@ -2,9 +2,13 @@ package com.example.urinoirapp.Controller;
 
 
 import com.example.urinoirapp.Model.Secretaire;
+import com.example.urinoirapp.Service.SecretaireService;
 import com.example.urinoirapp.service.EmailService;
-import com.example.urinoirapp.service.SecretaireService;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +33,8 @@ public class SecretaireController {
     @GetMapping("/secretaires")
     public String listSecretaires(Model model) {
         model.addAttribute("secretaires", secretaireService.getAllSecretaire());
+        String adminName = getCurrentUsername();
+        model.addAttribute("adminName", adminName);
         return "secretaires";
     }
 
@@ -86,7 +92,19 @@ public class SecretaireController {
         secretaireService.deleteSecretaireById(id);
         return "redirect:/secretaires";
     }
-
+    private String getCurrentUsername() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() != null) {
+            Object principal = authentication.getPrincipal();
+            if (principal instanceof UserDetails) {
+                return ((UserDetails) principal).getUsername();
+            } else {
+                return principal.toString();
+            }
+        }
+        return "login"; // Indicate that no user is currently logged in
+    }
 }
+
 
 

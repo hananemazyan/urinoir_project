@@ -7,6 +7,9 @@ import com.example.urinoirapp.service.EmailService;
 import com.example.urinoirapp.service.MedecinService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,6 +38,8 @@ public class MedecinController {
 	// handler method to handle list medecins and return mode and view
 	@GetMapping("/medecins")
 	public String listMedecins(Model model) {
+		String adminName = getCurrentUsername();
+		model.addAttribute("adminName", adminName);
 		model.addAttribute("medecins", medecinService.getAllMedecins());
 		return "medecins";
 	}
@@ -94,5 +99,17 @@ public class MedecinController {
 		medecinService.deleteMedecinById(id);
 		return "redirect:/medecins";
 	}
-
+	private String getCurrentUsername() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication != null && authentication.getPrincipal() != null) {
+			Object principal = authentication.getPrincipal();
+			if (principal instanceof UserDetails) {
+				return ((UserDetails) principal).getUsername();
+			} else {
+				return principal.toString();
+			}
+		}
+		return "login"; // Indicate that no user is currently logged in
+	}
 }
+

@@ -1,9 +1,10 @@
-package com.example.urinoirapp.service.impl;
+package com.example.urinoirapp.Service.impl;
 
 
 import com.example.urinoirapp.Model.Secretaire;
 import com.example.urinoirapp.Repository.SecretaireRepository;
-import com.example.urinoirapp.service.SecretaireService;
+
+import com.example.urinoirapp.Service.SecretaireService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

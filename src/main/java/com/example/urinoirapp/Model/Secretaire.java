@@ -22,7 +22,7 @@ public class Secretaire {
     private String motDePasse;
     private String numeroTelephone;
     private String serviceAffecte;
-
+    private String role;
     @ManyToOne
     @JoinColumn(name = "admin_id")
     private Admin admin;
@@ -107,4 +107,11 @@ public class Secretaire {
         this.admin = admin;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(final String role) {
+        this.role = role;
+    }
 }

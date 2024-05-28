@@ -8,6 +8,7 @@
 	<title>Admin Dashboard</title>
 	<meta content="" name="description">
 	<meta content="" name="keywords">
+	<link rel="shortcut icon" type="image/png" href="../assets/images/logos/logo1.png" />
 
 	<link rel="stylesheet" th:href="@{../images/assets/css/MedecinStyle.css}">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
@@ -269,7 +270,7 @@
 	<ul class="sidebar-nav" id="sidebar-nav">
 
 		<li class="nav-item">
-			<a class="nav-link " th:href="@{/dashboard}">
+			<a class="nav-link collapsed" th:href="@{/dashboard}">
 				<i class="bi bi-grid"></i>
 				<span>Home</span>
 			</a>
@@ -277,7 +278,7 @@
 
 
 		<li class="nav-item">
-			<a class="nav-link collapsed" href="medecins">
+			<a class="nav-link " th:href="@{/medecins}">
 				<i class="fa-solid fa-user-doctor"></i>
 				<span>Medecin</span>
 			</a>

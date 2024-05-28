@@ -1,4 +1,4 @@
-package com.example.urinoirapp.service;
+package com.example.urinoirapp.Service;
 
 import com.example.urinoirapp.Model.Secretaire;
 
@@ -6,6 +6,7 @@ import com.example.urinoirapp.Model.Secretaire;
 import java.util.List;
 
 public interface SecretaireService {
+
     List<Secretaire> getAllSecretaire();
 
     Secretaire saveSecretaire(Secretaire secretaire);

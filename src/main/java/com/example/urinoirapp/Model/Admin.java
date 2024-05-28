@@ -3,8 +3,11 @@ package com.example.urinoirapp.Model;
 
 import com.example.urinoirapp.Dto.AdminDto;
 import jakarta.persistence.*;
-import java.util.List;
+import org.springframework.format.annotation.DateTimeFormat;
 
+
+import java.util.Date;
+import java.util.List;
 
 
 @Entity
@@ -17,6 +20,24 @@ public class Admin extends AdminDto {
 
     @Column(name = "username")
     private String username;
+
+    @Column(name = "fullname")
+    private String fullname;
+
+    public String getFullname() {
+        return this.fullname;
+    }
+
+    public void setFullname(final String fullname) {
+        this.fullname = fullname;
+    }
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date DateOfBirth;
+
+
+    private String tel;
+    private String address;
 
     @Column(name = "email", unique = true)
     private String email;
@@ -97,15 +118,31 @@ public class Admin extends AdminDto {
     public void setRole(String role) {
         this.role = role;
     }
-
-    @Override
-    public String toString() {
-        return "Admin{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                '}';
+    public Date getDateOfBirth() {
+        return this.DateOfBirth;
     }
 
-}
+    public void setDateOfBirth(final Date dateOfBirth) {
+        this.DateOfBirth = dateOfBirth;
+    }
+
+
+
+    public String getTel() {
+        return this.tel;
+    }
+
+    public void setTel(final String tel) {
+        this.tel = tel;
+    }
+
+    public String getAddress() {
+        return this.address;
+    }
+
+    public void setAddress(final String address) {
+        this.address = address;
+    }
+
+
+    }

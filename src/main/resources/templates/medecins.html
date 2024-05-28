@@ -223,7 +223,7 @@
 					</li>
 
 					<li>
-						<a class="dropdown-item d-flex align-items-center" th:href="@{/AdminProfile}">
+						<a class="dropdown-item d-flex align-items-center" th:href="@{/users-profile}">
 							<i class="bi bi-person"></i>
 							<span>My Profile</span>
 						</a>
@@ -233,7 +233,7 @@
 					</li>
 
 					<li>
-						<a class="dropdown-item d-flex align-items-center" th:href="@{/AdminProfile}">
+						<a class="dropdown-item d-flex align-items-center" th:href="@{/users-profile}">
 							<i class="bi bi-gear"></i>
 							<span>Account Settings</span>
 						</a>
@@ -265,7 +265,7 @@
 	<ul class="sidebar-nav" id="sidebar-nav">
 
 		<li class="nav-item">
-			<a class="nav-link " th:href="@{/dashboard}">
+			<a class="nav-link collapsed " th:href="@{/dashboard}">
 				<i class="bi bi-grid"></i>
 				<span>Home</span>
 			</a>
@@ -273,7 +273,7 @@
 
 
 		<li class="nav-item">
-			<a class="nav-link collapsed" th:href="@{/medecins}">
+			<a class="nav-link " th:href="@{/medecins}">
 				<i class="fa-solid fa-user-doctor"></i>
 				<span>Medecin</span>
 			</a>
@@ -292,7 +292,7 @@
 		<li class="nav-heading">Pages</li>
 
 		<li class="nav-item">
-			<a class="nav-link collapsed" th:href="@{/AdminProfile}">
+			<a class="nav-link collapsed" th:href="@{/users-profile}">
 				<i class="bi bi-person"></i>
 				<span>Profile</span>
 			</a>
@@ -373,7 +373,10 @@
 
 						</tbody>
 					</table>
-
+				</div>
+			</div>
+		</div>
+	</main>
 <!-- ======= Footer ======= -->
 <footer id="footer" class="footer">
 	<div class="copyright">
@@ -390,10 +393,6 @@
 <script th:src="@{../images/assets/vendor/tinymce/tinymce.min.js}"></script>
 <!-- Template Main JS File -->
 <script th:src="@{../images/assets/js/main.js}"></script>
-</div>
-</div>
-</div>
-</main>
 </body>
 </html>
 
