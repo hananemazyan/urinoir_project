@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Data Graph</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: #ffffff;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .card {
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      background-color: #fff;
+      padding: 20px;
+      margin-bottom: 20px;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+      border: 1px solid #0A3177;
+    }
+
+    .card-title {
+      margin-bottom: 15px;
+      color: #0A3177;
+      font-weight: bolder;
+    }
+
+    .btn {
+      background-color: #226275;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #307e95;
+    }
+
+    .form-control {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 10px;
+      width: calc(100% - 90px);
+      margin-right: 10px;
+      transition: border-color 0.3s ease;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: #0A3177;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Live Data Graph</h5>
+
+      <div id="data"></div>
+      <canvas id="liveChart" width="400" height="200"></canvas>
+    </div>
+  </div>
+</div>
+<script>
+  let stompClient = null;
+  let chart = null;
+  const datasets = {};
+
+  function getRandomColor() {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
+
+  function connect() {
+    const socket = new SockJS('/ws');
+    stompClient = Stomp.over(socket);
+    stompClient.connect({}, function (frame) {
+      console.log('Connected: ' + frame);
+      stompClient.subscribe('/topic/testData', function (message) {
+        showTestData(JSON.parse(message.body));
+      });
+    });
+  }
+
+  function showTestData(testData) {
+    const dataDiv = document.getElementById('data');
+    const newData = document.createElement('div');
+    newData.innerHTML = `Patient ID: ${testData.patient.id}, Time: ${testData.second}, Volume: ${testData.volume}`;
+    dataDiv.appendChild(newData);
+
+    const patientId = testData.patient.id; // Extract patient ID from testData
+
+    if (!datasets[patientId]) {
+      const color = getRandomColor();
+      datasets[patientId] = {
+        label: `Patient ${patientId}`,
+        data: [],
+        borderColor: color,
+        backgroundColor: color + '33', // Adding transparency
+        fill: true
+      };
+      chart.data.datasets.push(datasets[patientId]);
+    }
+
+    datasets[patientId].data.push({ x: testData.second, y: testData.volume });
+    chart.update();
+  }
+
+  window.onload = function() {
+    connect();
+
+    const ctx = document.getElementById('liveChart').getContext('2d');
+    chart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        datasets: []
+      },
+      options: {
+        scales: {
+          x: {
+            type: 'linear',
+            position: 'bottom',
+            title: {
+              display: true,
+              text: 'Time (seconds)'
+            }
+          },
+          y: {
+            title: {
+              display: true,
+              text: 'Volume'
+            }
+          }
+        }
+      }
+    });
+  };
+</script>
+</body>
+</html>

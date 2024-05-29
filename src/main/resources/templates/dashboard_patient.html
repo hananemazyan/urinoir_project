@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <!-- Meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Urinewise</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/png" href="../assets/images/logos/favicon.png" />
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Highcharts library -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <!-- Stylesheets -->
+
+    <link rel="stylesheet" href="../assets/css/styles.min.css" />
+    <link rel="stylesheet" href="../assets/css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        .search-input {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .search-input.show {
+            display: block;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+<!-- Body Wrapper -->
+<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+     data-sidebar-position="fixed" data-header-position="fixed">
+    <!-- Sidebar Start -->
+    <aside class="left-sidebar">
+        <!-- Sidebar scroll-->
+        <div>
+            <div class="brand-logo d-flex align-items-center justify-content-between">
+                <!-- Logo -->
+                <a href="./index.html" class="text-nowrap logo-img">
+                    <img src="../assets/image/logos/dark-logo.svg" width="180" alt="" />
+                </a>
+                <!-- Sidebar toggler -->
+                <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
+                    <i class="fas fa-times fs-8"></i>
+                </div>
+            </div>
+            <!-- Sidebar navigation -->
+            <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
+                <!-- Sidebar items -->
+                <ul id="sidebarnav">
+                    <!-- Home section -->
+                    <li class="nav-small-cap">
+                        <i class="fas fa-ellipsis-h nav-small-cap-icon fs-4"></i>
+                        <span class="hide-menu">Home</span>
+                    </li>
+                    <!-- Dashboard -->
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" th:href="@{'/dashboard_patient?patientId=' + ${patientId}}" aria-expanded="false">
+                            <span><i class="fas fa-columns"></i></span>
+                            <span class="hide-menu">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-small-cap">
+                        <i class="fas fa-ellipsis-h nav-small-cap-icon fs-4"></i>
+                        <span class="hide-menu">My space</span>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" th:href="@{/profile_patient/{patientId}(patientId=${patientId})}" aria-expanded="false" >
+                            <span><i class="fas fa-user"></i></span>
+                            <span class="hide-menu">Profile</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" th:href="@{/history/{patientId}(patientId=${patientId})}" aria-expanded="false">
+                            <span><i class="fas fa-history"></i></span>
+                            <span class="hide-menu">History</span>
+                        </a>
+                    </li>
+                    <!-- Reports -->
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="./ui-card.html" aria-expanded="false">
+                            <span><i class="fas fa-file-medical"></i></span>
+                            <span class="hide-menu">Reports</span>
+                        </a>
+                    </li>
+                    <!-- Settings -->
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="./ui-forms.html" aria-expanded="false">
+                            <span><i class="fas fa-cogs"></i></span>
+                            <span class="hide-menu">Settings</span>
+                        </a>
+                    </li>
+                    <!-- Authentication section -->
+                    <li class="nav-small-cap">
+                        <i class="fas fa-ellipsis-h nav-small-cap-icon fs-4"></i>
+                        <span class="hide-menu">AUTH</span>
+                    </li>
+                    <!-- Sign Out -->
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="./authentication-login.html" aria-expanded="false">
+                            <span><i class="fas fa-sign-out-alt"></i></span>
+                            <span class="hide-menu">Sign Out</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <!-- End Sidebar navigation -->
+        </div>
+        <!-- End Sidebar scroll-->
+    </aside>
+    <!--  Sidebar End -->
+    <!--  Main wrapper -->
+    <div class="body-wrapper">
+        <!--  Header Start -->
+        <header class="app-header">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <ul class="navbar-nav">
+                    <li class="nav-item d-block d-xl-none">
+                        <!-- Sidebar toggler for smaller screens -->
+                        <a class="nav-link sidebartoggler nav-icon-hover" id="headerCollapse" href="javascript:void(0)">
+                            <i class="fas fa-bars"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <!-- Search icon -->
+                        <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="searchIcon">
+                            <i class="fas fa-search"></i>
+                            <!-- Notification indicator -->
+                        </a>
+                    </li>
+                    <!-- Icon for live stream -->
+                    <li class="nav-item">
+                        <a class="nav-link nav-icon-hover"  th:href="@{/live}">
+                            <i class="fas fa-video"></i>
+                        </a>
+                    </li>
+                </ul>
+                <!-- Hidden search input -->
+                <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
+                    <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
+                        <li class="nav-item">
+                            <input type="text" class="form-control search-input" id="navbarSearchInput" placeholder="Search...">
+                        </li>
+                    </ul>
+                </div>
+
+
+            </nav>
+        </header>
+        <!--  Header End -->
+        <div class="container-fluid">
+            <div class="row mt-4">
+                <div class="col-lg-12 mx-auto">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Welcome!</h5>
+                            <p class="card-text">We wish you good health and happiness. If you have any questions or concerns, feel free to reach out to us.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Left column -->
+            <div class="col-lg-8 d-flex align-items-stretch">
+                <div class="card w-100">
+                    <div class="card-body">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" id="testIdInput" placeholder="Enter Test ID">
+                            <button class="btn btn-primary" type="button" onclick="fetchGraphByTestId()">Search</button>
+                        </div>
+                        <div class="d-sm-flex d-block align-items-center justify-content-between mb-9">
+                            <div class="mb-3 mb-sm-0">
+                                <h5 class="card-title fw-semibold">Graph</h5>
+                            </div>
+                        </div>
+                        <!-- Chart container -->
+                        <div id="chart">Loading...</div>
+                    </div>
+                </div>
+            </div>
+            <!-- Right column -->
+            <div class="col-lg-4">
+                <div class="row">
+                    <!-- Patient Info card -->
+                    <div class="col-lg-12">
+                        <div class="card overflow-hidden">
+                            <div class="card-body p-4">
+                                <h5 class="card-title mb-9 fw-semibold">Patient Information</h5>
+                                <div id="patientInfo">Loading...</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- QR Code card -->
+                    <div class="col-lg-12">
+                        <div class="card overflow-hidden">
+                            <div class="card-body p-4">
+                                <h5 class="card-title mb-9 fw-semibold">QR Code</h5>
+                                <div id="qrCode">Loading...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- End of main wrapper -->
+
+
+<footer class="footer text-center mt-5">
+    <div class="container">
+        <span class="text-muted">&copy; 2024 Urinewise. All rights reserved.</span>
+    </div>
+</footer>
+<!-- JavaScript includes -->
+<script src="../assets/libs/jquery/dist/jquery.min.js"></script>
+<script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/js/sidebarmenu.js"></script>
+<script src="../assets/js/app.min.js"></script>
+
+<!-- Custom Script for chart initialization -->
+<script>
+    let stompClient = null;
+
+    function connect() {
+        const socket = new SockJS('/ws');
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, function (frame) {
+            console.log('Connected: ' + frame);
+            stompClient.subscribe('/topic/testData', function (message) {
+                showTestData(JSON.parse(message.body));
+            });
+        });
+    }
+
+    function showTestData(testData) {
+        const dataDiv = document.getElementById('data');
+        const newData = document.createElement('div');
+        newData.innerHTML = `Time: ${testData.second}, Volume: ${testData.volume}`;
+        dataDiv.appendChild(newData);
+    }
+
+    window.onload = function() {
+        connect();
+    };
+
+    var myChart = null; // Variable to store the Chart instance
+
+    // Function to fetch reference data
+    function fetchReferenceData(url) {
+        fetch(url)
+            .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+            .then(referenceData => {
+            renderGraph(referenceData);
+        })
+            .catch(error => {
+            console.error('Error fetching reference data:', error);
+        });
+    }
+
+    // Function to fetch and render graph data by ID
+    function fetchGraphByTestId(patientId, testId) {
+        const url = `/fetchGraphData?patientId=${patientId}&testId=${testId}`;
+        fetch(url)
+            .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+            .then(graphData => {
+            renderGraph(graphData);
+        })
+            .catch(error => {
+            console.error('Error fetching graph data:', error);
+        });
+    }
+
+    // Function to render the graph using Highcharts
+    function renderGraph(graphData) {
+        // Determine the structure of the data and extract seconds and volumes accordingly
+        var seconds, volumes;
+
+        if (Array.isArray(graphData) && graphData.length > 0) {
+            // Data structure is an array
+            if ('second' in graphData[0] && 'volume' in graphData[0]) {
+                // Data structure has 'second' and 'volume' properties
+                seconds = graphData.map(dataPoint => dataPoint.second);
+                volumes = graphData.map(dataPoint => dataPoint.volume);
+            } else if (graphData[0].hasOwnProperty(0) && graphData[0].hasOwnProperty(1)) {
+                // Data structure is an array where each entry contains timestamp and volume
+                seconds = graphData.map(dataPoint => dataPoint[0]);
+                volumes = graphData.map(dataPoint => dataPoint[1]);
+            } else {
+                console.error('Invalid graph data structure:', graphData);
+                return; // Exit the function if the data structure is invalid
+            }
+        } else {
+            console.error('Invalid graph data:', graphData);
+            return; // Exit the function if the data is invalid
+        }
+
+        // Destroy the existing Chart instance if it exists
+        if (myChart) {
+            myChart.destroy();
+        }
+
+        Highcharts.chart('chart', {
+            chart: {
+                type: 'line'
+            },
+            title: {
+                text: 'Volume Over Time'
+            },
+            xAxis: {
+                title: {
+                    text: 'Time (seconds)'
+                },
+                categories: seconds
+            },
+            yAxis: {
+                title: {
+                    text: 'Volume'
+                },
+                min: 0,
+                max: Math.max(...volumes) + 5 // Adjust maximum value for y-axis dynamically
+            },
+            series: [{
+                name: 'Volume',
+                data: volumes
+            }]
+        });
+    }
+
+    window.onload = function () {
+        // Fetch reference data and patient info when the page loads
+        fetchReferenceData(`/api/referenceData`);
+        fetchPatientInfo(1); // Replace 1 with the actual patient ID
+    };
+
+    function fetchPatientInfo(patientId) {
+        fetch(`/api/patients/${patientId}`)
+            .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch patient information');
+            }
+            return response.json();
+        })
+            .then(patientInfo => {
+            displayPatientInfo(patientInfo);
+        })
+            .catch(error => {
+            console.error('Error fetching patient info:', error);
+        });
+    }
+
+    function displayPatientInfo(patientInfo) {
+        // Parse the date of birth string into a Date object
+        const dateOfBirth = new Date(patientInfo.dateNaissance);
+
+        // Calculate age from date of birth
+        const age = calculateAge(dateOfBirth);
+
+        const patientInfoHtml = `
+        <p>Name: ${patientInfo.nom} ${patientInfo.prenom}</p>
+        <p>Age: ${age}</p>
+        <p>Address: ${patientInfo.adresse}</p>
+    `;
+        document.getElementById('patientInfo').innerHTML = patientInfoHtml;
+    }
+
+    // Helper function to calculate age from date of birth
+    function calculateAge(birthDate) {
+        const today = new Date();
+        const age = today.getFullYear() - birthDate.getFullYear();
+        const month = today.getMonth() - birthDate.getMonth();
+        if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
+            return age - 1;
+        }
+        return age;
+    }
+    // JavaScript function to fetch graph data by test ID
+    function fetchGraphByTestId() {
+        // Get the test ID from the input box
+        const testId = document.getElementById('testIdInput').value;
+
+        // Extract patientId from URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const patientId = urlParams.get('patientId');
+
+        if (!patientId) {
+            console.error('No patient ID provided.');
+            return;
+        }
+
+        if (!testId) {
+            console.error('No test ID provided.');
+            return;
+        }
+
+        const url = `/fetchGraphData?patientId=${patientId}&testId=${testId}`;
+        fetch(url)
+            .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+            .then(graphData => {
+            console.log('Graph data:', graphData); // Log graphData to the console
+            renderGraph(graphData);
+        })
+            .catch(error => {
+            console.error('Error fetching graph data:', error);
+        });
+
+    }
+    function handleNavbarSearch() {
+        const searchTerm = document.getElementById('navbarSearchInput').value;
+        if (searchTerm) {
+            console.log('Searching for:', searchTerm);
+        } else {
+            console.error('No search term provided.');
+        }
+    }
+
+</script>
+</body>
+</html>
+

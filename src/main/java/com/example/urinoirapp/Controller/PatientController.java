@@ -92,7 +92,7 @@ public class PatientController {
         Patient savedPatient = patientService.savePatient(patient);
 
         // Generate QR code for the patient
-        String qrCodePath = "C:\\Users\\D\\Desktop\\qrCode\\qrCode\\src\\main\\resources\\static\\images\\" + savedPatient.getId() + "_QRCode.png";
+        String qrCodePath = "src/main/resources/QR_code_Images/" + savedPatient.getId() + "_QRCode.png";
         try {
 //            qrCodeGenerator.generateQRCode(savedPatient.getId(), savedPatient.getSerialCode(), qrCodePath, 200, 200);
             qrCodeGenerator.generateQRCode(savedPatient.getId(), savedPatient.getSerialCode(), qrCodePath, 200, 200);
@@ -239,7 +239,7 @@ public class PatientController {
         return "testHistory";
     }
 
-    @GetMapping("/viewGraph")
+    /* @GetMapping("/viewGraph")
     public String viewGraph(
             @RequestParam("patientId") Long patientId,
             @RequestParam("testId") Long testId,
@@ -277,8 +277,8 @@ public class PatientController {
 
         return graphData;
     }
-
-    @GetMapping("/addTestData")
+*/
+   /* @GetMapping("/addTestData")
     public String addTestData(
             @RequestParam("second") int second,
             @RequestParam("volume") double volume,
@@ -321,7 +321,7 @@ public class PatientController {
 
 
 }
-
+*/
     @GetMapping("/api/patients/{id}")
     public ResponseEntity<Patient> getPatientById(@PathVariable Long id) {
         return patientRepository.findById(id)

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -224,7 +224,7 @@
 									<div class ="form-group">
 										<label> HealthProblem </label>
 										<select name="healthProblem" th:field="*{healthProblem}" class="form-control">
-											<option th:each="problem : ${T(com.CodeQr.qrCode.HealthProblem).values()}" th:value="${problem}" th:text="${problem}"></option>
+											<option th:each="problem : ${T(com.example.urinoirapp.HealthProblem).values()}" th:value="${problem}" th:text="${problem}"></option>
 										</select>
 									</div>
 

@@ -121,14 +121,14 @@ public class TestDataController {
             }
             temporaryTestDataList.clear();
             model.addAttribute("message", "Test data saved successfully.");
-            return "Dashboard";
+            return "dashboard_patient";
         } else {
             model.addAttribute("message", "Waiting for more data. Current count: " + temporaryTestDataList.size());
-            return "Dashboard";
+            return "dashboard_patient";
         }
     }
 
-    @GetMapping("/Dashboard/{patientId}")
+    @GetMapping("/dashboard_patient/{patientId}")
     public String visualizeTestData(Model model) {
         List<TestData> allTestData = testDataService.getAllTestData();
         List<Double> volumeList = allTestData.stream()
@@ -143,7 +143,7 @@ public class TestDataController {
         model.addAttribute("time", timeList);
 
         CacheControl cacheControl = CacheControl.noCache().mustRevalidate();
-        return "Dashboard";
+        return "dashboard_patient";
     }
 
     @GetMapping("/visualizeTestDevice/{deviceId}")
@@ -163,10 +163,10 @@ public class TestDataController {
         model.addAttribute("volume", volumeList);
         model.addAttribute("time", timeList);
 
-        return "Dashboard";
+        return "dashboard_patient";
     }
 
-    @GetMapping("/Dashboard")
+    @GetMapping("/dashboard_patient")
     public String visualizeTestDataForPatient(@RequestParam(value = "patientId", required = false) Long patientId, Model model) {
         if (patientId == null) {
             // Handle case when patientId is not provided
@@ -190,7 +190,7 @@ public class TestDataController {
         model.addAttribute("time", timeList);
         model.addAttribute("patientId", patientId);  // Add patientId to the model
 
-        return "Dashboard";
+        return "dashboard_patient";
     }
 
     @GetMapping("/fetchDashboardData")
@@ -305,7 +305,7 @@ public class TestDataController {
         return graphData;
     }
 
-    @GetMapping("/profile/{patientId}")
+    @GetMapping("/profile_patient/{patientId}")
     public String getPatientProfile(@PathVariable Long patientId, Model model) {
         Patient patient = patientService.getPatientById(patientId);
         if (patient == null) {
@@ -314,7 +314,7 @@ public class TestDataController {
         }
         model.addAttribute("patient", patient);
         model.addAttribute("patientId", patientId);  // Add patientId to the model
-        return "Profile";
+        return "profile_patient";
     }
 
     @GetMapping("/fetchTestData/{patientId}")
