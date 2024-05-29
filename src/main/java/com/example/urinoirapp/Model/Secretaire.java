@@ -2,10 +2,12 @@ package com.example.urinoirapp.Model;
 
 
 import jakarta.persistence.*;
+
 import java.util.List;
 
 @Entity
 @Table(name = "secretaires")
+
 public class Secretaire {
 
     @Id
@@ -20,15 +22,10 @@ public class Secretaire {
     private String motDePasse;
     private String numeroTelephone;
     private String serviceAffecte;
-
+    private String role;
     @ManyToOne
     @JoinColumn(name = "admin_id")
     private Admin admin;
-
-    @ManyToMany(mappedBy = "secretaires")
-    private List<Rapport> rapports;
-
-    // Getters and setters
 
     public Long getId() {
         return id;
@@ -110,11 +107,11 @@ public class Secretaire {
         this.admin = admin;
     }
 
-    public List<Rapport> getRapports() {
-        return rapports;
+    public String getRole() {
+        return role;
     }
 
-    public void setRapports(List<Rapport> rapports) {
-        this.rapports = rapports;
+    public void setRole(final String role) {
+        this.role = role;
     }
 }

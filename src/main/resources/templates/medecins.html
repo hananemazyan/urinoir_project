@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+	<title>Admin Dashboard</title>
+	<meta content="" name="description">
+	<meta content="" name="keywords">
+
+	<link rel="stylesheet" th:href="@{../images/assets/css/MedecinStyle.css}" >
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+
+	<script src="https://kit.fontawesome.com/6b9ab0fbe9.js" crossorigin="anonymous"></script>
+	<!-- Favicons -->
+	<link th:href="@{../images/assets/img/logo1.png}" href="" rel="icon">
+
+
+	<!-- Google Fonts -->
+	<link href="https://fonts.gstatic.com" rel="preconnect">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+	<!-- Vendor CSS Files -->
+	<link th:href="@{../images/assets/vendor/bootstrap/css/bootstrap.min.css}" href="" rel="stylesheet">
+	<link th:href="@{../images/assets/vendor/bootstrap-icons/bootstrap-icons.css}" href="" rel="stylesheet">
+	<link th:href="@{../images/assets/vendor/boxicons/css/boxicons.min.css}" href="" rel="stylesheet">
+
+
+	<!-- Template Main CSS File -->
+	<link th:href="@{../images/assets/css/style.css}" href="" rel="stylesheet">
+</head>
+
+<body>
+
+<!-- ======= Header ======= -->
+<header id="header" class="header fixed-top d-flex align-items-center">
+
+	<div class="d-flex align-items-center justify-content-between">
+		<a th:href="@{/dashboard}" class="logo d-flex align-items-center">
+			<img th:src="@{../images/assets/img/logo1.png}" alt="">
+			<span class="d-none d-lg-block">UrinWise</span>
+		</a>
+		<i class="bi bi-list toggle-sidebar-btn"></i>
+	</div><!-- End Logo -->
+
+	<div class="search-bar">
+		<form class="search-form d-flex align-items-center" method="POST" action="#">
+			<input type="text" name="query" placeholder="Search" title="Enter search keyword">
+			<button type="submit" title="Search"><i class="bi bi-search"></i></button>
+		</form>
+	</div><!-- End Search Bar -->
+
+	<nav class="header-nav ms-auto">
+		<ul class="d-flex align-items-center">
+
+			<li class="nav-item d-block d-lg-none">
+				<a class="nav-link nav-icon search-bar-toggle " href="#">
+					<i class="bi bi-search"></i>
+				</a>
+			</li><!-- End Search Icon-->
+
+			<li class="nav-item dropdown">
+
+				<a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+					<i class="bi bi-bell"></i>
+					<span class="badge bg-primary badge-number">2</span>
+				</a><!-- End Notification Icon -->
+
+				<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+					<li class="dropdown-header">
+						You have  new notifications
+						<a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+					</li>
+					<li>
+						<hr class="dropdown-divider">
+					</li>
+
+					<li class="notification-item">
+						<i class="bi bi-exclamation-circle text-warning"></i>
+						<div>
+							<h4>Lorem Ipsum</h4>
+							<p>Quae dolorem earum veritatis oditseno</p>
+							<p>30 min. ago</p>
+						</div>
+					</li>
+
+					<li>
+						<hr class="dropdown-divider">
+					</li>
+
+					<li class="notification-item">
+						<i class="bi bi-x-circle text-danger"></i>
+						<div>
+							<h4>Atque rerum nesciunt</h4>
+							<p>Quae dolorem earum veritatis oditseno</p>
+							<p>1 hr. ago</p>
+						</div>
+					</li>
+
+					<li>
+						<hr class="dropdown-divider">
+					</li>
+
+					<li class="notification-item">
+						<i class="bi bi-check-circle text-success"></i>
+						<div>
+							<h4>Sit rerum fuga</h4>
+							<p>Quae dolorem earum veritatis oditseno</p>
+							<p>2 hrs. ago</p>
+						</div>
+					</li>
+
+					<li>
+						<hr class="dropdown-divider">
+					</li>
+
+					<li class="notification-item">
+						<i class="bi bi-info-circle text-primary"></i>
+						<div>
+							<h4>Dicta reprehenderit</h4>
+							<p>Quae dolorem earum veritatis oditseno</p>
+							<p>4 hrs. ago</p>
+						</div>
+					</li>
+
+					<li>
+						<hr class="dropdown-divider">
+					</li>
+					<li class="dropdown-footer">
+						<a href="#">Show all notifications</a>
+					</li>
+
+				</ul><!-- End Notification Dropdown Items -->
+
+			</li><!-- End Notification Nav -->
+
+			<li class="nav-item dropdown">
+
+				<a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+					<i class="bi bi-chat-left-text"></i>
+					<span class="badge bg-success badge-number">3</span>
+				</a><!-- End Messages Icon -->
+
+				<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
+					<li class="dropdown-header">
+						You have 3 new messages
+						<a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+					</li>
+					<li>
+						<hr class="dropdown-divider">
+					</li>
+
+					<li class="message-item">
+						<a href="#">
+							<img th:src="@{../images/assets/img/messages-1.jpg}"  alt="" class="rounded-circle">
+							<div>
+								<h4>Maria Hudson</h4>
+								<p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+								<p>4 hrs. ago</p>
+							</div>
+						</a>
+					</li>
+					<li>
+						<hr class="dropdown-divider">
+					</li>
+
+					<li class="message-item">
+						<a href="#">
+							<img th:src="@{../images/assets/img/messages-2.jpg}" alt="" class="rounded-circle">
+							<div>
+								<h4>Anna Nelson</h4>
+								<p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+								<p>6 hrs. ago</p>
+							</div>
+						</a>
+					</li>
+					<li>
+						<hr class="dropdown-divider">
+					</li>
+
+					<li class="message-item">
+						<a href="#">
+							<img th:src="@{../images/assets/img/messages-3.jpg}" alt="" class="rounded-circle">
+							<div>
+								<h4>David Muldon</h4>
+								<p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+								<p>8 hrs. ago</p>
+							</div>
+						</a>
+					</li>
+					<li>
+						<hr class="dropdown-divider">
+					</li>
+
+					<li class="dropdown-footer">
+						<a href="#">Show all messages</a>
+					</li>
+
+				</ul><!-- End Messages Dropdown Items -->
+
+			</li><!-- End Messages Nav -->
+			<li class="nav-item dropdown pe-3">
+
+				<a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+					<img th:src="@{../images/assets/img/profile-img.jpg}" alt="Profile" class="rounded-circle">
+					<span class="d-none d-md-block dropdown-toggle ps-2" th:text="${adminName}" ></span>
+				</a><!-- End Profile Iamge Icon -->
+
+				<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+					<li class="dropdown-header">
+						<h6 th:text="${adminName}"></h6>
+
+					</li>
+					<li>
+						<hr class="dropdown-divider">
+					</li>
+
+					<li>
+						<a class="dropdown-item d-flex align-items-center" th:href="@{/users-profile}">
+							<i class="bi bi-person"></i>
+							<span>My Profile</span>
+						</a>
+					</li>
+					<li>
+						<hr class="dropdown-divider">
+					</li>
+
+					<li>
+						<a class="dropdown-item d-flex align-items-center" th:href="@{/users-profile}">
+							<i class="bi bi-gear"></i>
+							<span>Account Settings</span>
+						</a>
+					</li>
+					<li>
+						<hr class="dropdown-divider">
+					</li>
+
+					<li>
+						<a class="dropdown-item d-flex align-items-center" th:href="@{/login}">
+							<i class="bi bi-box-arrow-right"></i>
+							<span>Sign Out</span>
+						</a>
+					</li>
+
+				</ul><!-- End Profile Dropdown Items -->
+			</li><!-- End Profile Nav -->
+
+		</ul>
+	</nav><!-- End Icons Navigation -->
+
+</header><!-- End Header -->
+
+
+
+<!-- ======= Sidebar ======= -->
+<aside id="sidebar" class="sidebar">
+
+	<ul class="sidebar-nav" id="sidebar-nav">
+
+		<li class="nav-item">
+			<a class="nav-link collapsed " th:href="@{/dashboard}">
+				<i class="bi bi-grid"></i>
+				<span>Home</span>
+			</a>
+		</li><!-- End Dashboard Nav -->
+
+
+		<li class="nav-item">
+			<a class="nav-link " th:href="@{/medecins}">
+				<i class="fa-solid fa-user-doctor"></i>
+				<span>Medecin</span>
+			</a>
+		</li>
+		<!-- End Forms Nav -->
+
+		<li class="nav-item">
+			<a class="nav-link collapsed" th:href="@{/secretaires}">
+				<i class="fa-solid fa-user-nurse"></i>
+				<span>Secretaire</span>
+			</a>
+		</li><!-- End Tables Nav -->
+
+
+
+		<li class="nav-heading">Pages</li>
+
+		<li class="nav-item">
+			<a class="nav-link collapsed" th:href="@{/users-profile}">
+				<i class="bi bi-person"></i>
+				<span>Profile</span>
+			</a>
+		</li><!-- End Profile Page Nav -->
+
+
+		<li class="nav-item">
+			<a class="nav-link collapsed" th:href="@{/login}">
+				<i class="bi bi-box-arrow-in-right"></i>
+				<span>Logout</span>
+			</a>
+		</li><!-- End Login Page Nav -->
+
+
+	</ul>
+
+</aside><!-- End Sidebar-->
+	<main id="main" class="main">
+
+		<div class="pagetitle">
+			<h1>Medecins</h1>
+			<nav>
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a th:href="@{/medecins}">Menage Medecin</a></li>
+					<li class="breadcrumb-item active">Medecins</li>
+				</ol>
+			</nav>
+		</div><!-- End Page Title -->
+
+		<div class="container-xl">
+			<div class="table-responsive">
+				<div class="table-wrapper">
+					<div class="table-title">
+						<div class="row">
+							<div class="col-sm-6">
+								<h2>Manage<b> Medecin</b></h2>
+							</div>
+							<div class="col-sm-6">
+								<a th:href = "@{/medecins/new}" class="btn btn-success"><i class="material-icons">&#xE147;</i> <span>Add New Medecin</span></a>
+							</div>
+						</div>
+					</div>
+					<br>
+					<table class="table table-striped table-hover">
+						<thead>
+						<tr>
+							<th> Id</th>
+							<th> Code</th>
+							<th>FirstName</th>
+							<th>LastName</th>
+							<th>Cin</th>
+							<th> Email</th>
+							<th> Password</th>
+							<th>Phone</th>
+							<th>Actions</th>
+						</tr>
+						</thead>
+						<tbody>
+
+						<tr th:each = "medecin: ${medecins}">
+							<td th:text = "${medecin.getId()}"></td>
+							<td th:text = "${medecin.code}"></td>
+							<td th:text = "${medecin.nom}"></td>
+							<td th:text = "${medecin.prenom}"></td>
+							<td th:text = "${medecin.cin}"></td>
+							<td th:text = "${medecin.email}"></td>
+							<td th:text = "${medecin.motDePasse}"></td>
+							<td th:text = "${medecin.numeroTelephone}"></td>
+							<td style="white-space: nowrap">
+								<a th:href = "@{/medecins/edit/{id}(id=${medecin.id})}"
+								   class = "btn btn-primary btn-sm ">Update</a>
+
+								<a th:href = "@{/medecins/{id}(id=${medecin.id})}"
+								   class = "btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</a>
+
+							</td>
+						</tr>
+
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</main>
+<!-- ======= Footer ======= -->
+<footer id="footer" class="footer">
+	<div class="copyright">
+		&copy; Copyright <strong><span>UrinWise</span></strong>. All Rights Reserved
+	</div>
+</footer><!-- End Footer -->
+
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+
+<!-- Vendor JS Files -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script th:src="@{../images/assets/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{../images/assets/vendor/tinymce/tinymce.min.js}"></script>
+<!-- Template Main JS File -->
+<script th:src="@{../images/assets/js/main.js}"></script>
+</body>
+</html>
+
+

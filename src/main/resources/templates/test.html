@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Role Selection</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 400px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+        margin-bottom: 10px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    input,
+    select {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        box-sizing: border-box;
+        margin-top: 3px;
+    }
+
+    button {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+
+</style>
+<body>
+<div class="container">
+    <h1>Role Selection</h1>
+    <div class="form-group">
+        <label for="role">Select your role:</label>
+        <select id="role" onchange="toggleFields()">
+            <option value="doctor">Doctor</option>
+            <option value="secretary">Secretary</option>
+            <option value="patient">Patient</option>
+        </select>
+    </div>
+    <div class="form-group" id="emailPasswordFields">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+    </div>
+    <div class="form-group" id="serialCodeField" style="display: none;">
+        <label for="serialCode">Serial Code:</label>
+        <input type="text" id="serialCode" name="serialCode">
+    </div>
+    <button onclick="submitForm()">Submit</button>
+</div>
+<script>
+    function toggleFields() {
+        var role = document.getElementById("role").value;
+        var emailPasswordFields = document.getElementById("emailPasswordFields");
+        var serialCodeField = document.getElementById("serialCodeField");
+
+        if (role === "doctor") {
+            emailPasswordFields.style.display = "block";
+            serialCodeField.style.display = "none";
+        } else if (role === "secretary" || role === "patient") {
+            emailPasswordFields.style.display = "block";
+            serialCodeField.style.display = "none";
+        } else {
+            emailPasswordFields.style.display = "none";
+            serialCodeField.style.display = "block";
+        }
+    }
+
+    function submitForm() {
+        var role = document.getElementById("role").value;
+        var email = document.getElementById("email").value;
+        var password = document.getElementById("password").value;
+        var serialCode = document.getElementById("serialCode").value;
+
+        if (role === "doctor" || role === "secretary") {
+            // Handle email and password
+            console.log("Role: " + role + ", Email: " + email + ", Password: " + password);
+        } else {
+            // Handle serial code
+            console.log("Role: " + role + ", Serial Code: " + serialCode);
+        }
+    }
+
+</script>
+</body>
+</html>

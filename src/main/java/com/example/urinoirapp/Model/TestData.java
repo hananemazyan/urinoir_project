@@ -1,40 +1,42 @@
 package com.example.urinoirapp.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+
+import jakarta.persistence.*;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "patient_test_data")
 public class TestData {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long patientId; // ID du patient associé à ces données
+    @ManyToOne
+    @JoinColumn(name = "patient_id")
+    private Patient patient;
 
-    private double volume; // Volume généré à chaque seconde
+    @ManyToOne
+    @JoinColumn(name = "device_id")
+    private Device device;
+    private Long testId;
 
-    private int timeInSeconds; // Temps en secondes
+    private LocalDate testDate;
+    private LocalDateTime recordedAt;
+    private int second;
+    private double volume;
 
-    private LocalDate testDate; // Date du test
+    // Utilisation de l'id du test comme testId
 
-    private LocalDateTime recordedAt; // Horodatage du moment où les données ont été enregistrées
 
-    public TestData() {
+    // Getter et Setter pour testId
+    public Long getTestId() {
+        return id;
     }
 
-    public TestData(Long patientId, double volume, int timeInSeconds, LocalDate testDate, LocalDateTime recordedAt) {
-        this.patientId = patientId;
-        this.volume = volume;
-        this.timeInSeconds = timeInSeconds;
-        this.testDate = testDate;
-        this.recordedAt = recordedAt;
+    public void setTestId(Long testId) {
+        this.testId = testId;
     }
 
     public Long getId() {
@@ -45,28 +47,20 @@ public class TestData {
         this.id = id;
     }
 
-    public Long getPatientId() {
-        return patientId;
+    public Patient getPatient() {
+        return patient;
     }
 
-    public void setPatientId(Long patientId) {
-        this.patientId = patientId;
+    public void setPatient(Patient patient) {
+        this.patient = patient;
     }
 
-    public double getVolume() {
-        return volume;
+    public Device getDevice() {
+        return device;
     }
 
-    public void setVolume(double volume) {
-        this.volume = volume;
-    }
-
-    public int getTimeInSeconds() {
-        return timeInSeconds;
-    }
-
-    public void setTimeInSeconds(int timeInSeconds) {
-        this.timeInSeconds = timeInSeconds;
+    public void setDevice(Device device) {
+        this.device = device;
     }
 
     public LocalDate getTestDate() {
@@ -84,4 +78,21 @@ public class TestData {
     public void setRecordedAt(LocalDateTime recordedAt) {
         this.recordedAt = recordedAt;
     }
+
+    public int getSecond() {
+        return second;
+    }
+
+    public void setSecond(int second) {
+        this.second = second;
+    }
+
+    public double getVolume() {
+        return volume;
+    }
+
+    public void setVolume(double volume) {
+        this.volume = volume;
+    }
 }
+

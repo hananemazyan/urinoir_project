@@ -1,35 +1,53 @@
 package com.example.urinoirapp.Model;
 
 import jakarta.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "medecins")
-public class Medecin {
+public class Medecin{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "code")
     private String code;
+
+    @Column(name = "nom")
     private String nom;
+
+    @Column(name = "prenom")
     private String prenom;
+
+    @Column(name = "cin")
     private String cin;
+
+    @Column(name = "email")
     private String email;
+
+    @Column(name = "motDePasse")
     private String motDePasse;
+
+    @Column(name = "numeroTelephone")
     private String numeroTelephone;
 
-    @ManyToOne
-    @JoinColumn(name = "admin_id") // Assuming the column name in Medecin table referencing Admin is admin_id
-    private Admin admin;
+    public Medecin() {
+    }
 
-    @OneToMany(mappedBy = "medecin")
-    private List<Patient> patients;
 
-    @OneToMany(mappedBy = "medecin")
-    private List<Rapport> rapports;
+    @JoinColumn(name = "admin_id")
+    private Long admin;
 
-    // Getters and setters
+    public Medecin(String code, String nom, String prenom, String cin, String email, String motDePasse, String numeroTelephone) {
+
+        this.code = code;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.cin = cin;
+        this.email = email;
+        this.motDePasse = motDePasse;
+        this.numeroTelephone = numeroTelephone;
+    }
 
     public Long getId() {
         return id;
@@ -75,6 +93,14 @@ public class Medecin {
         return email;
     }
 
+    public Long getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Long admin) {
+        this.admin = admin;
+    }
+
     public void setEmail(String email) {
         this.email = email;
     }
@@ -94,28 +120,6 @@ public class Medecin {
     public void setNumeroTelephone(String numeroTelephone) {
         this.numeroTelephone = numeroTelephone;
     }
-
-    public Admin getAdmin() {
-        return admin;
-    }
-
-    public void setAdmin(Admin admin) {
-        this.admin = admin;
-    }
-
-    public List<Patient> getPatients() {
-        return patients;
-    }
-
-    public void setPatients(List<Patient> patients) {
-        this.patients = patients;
-    }
-
-    public List<Rapport> getRapports() {
-        return rapports;
-    }
-
-    public void setRapports(List<Rapport> rapports) {
-        this.rapports = rapports;
-    }
 }
+
+
