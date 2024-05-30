@@ -25,8 +25,6 @@ public class Patient {
     private String Email;
     private String Role;
 
-    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
-    private List<TestData> testData = new ArrayList<> ();
 
     @Enumerated(EnumType.STRING)
     private HealthProblem healthProblem;
@@ -140,14 +138,6 @@ public class Patient {
 
     public void setRole(final String role) {
         this.Role = role;
-    }
-
-    public List<TestData> getTests() {
-        return this.testData;
-    }
-
-    public void setTests(final List<TestData> testData) {
-        this.testData = testData;
     }
 
     public HealthProblem getHealthProblem() {

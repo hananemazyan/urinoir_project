@@ -305,8 +305,8 @@ public class TestDataController {
         return graphData;
     }
 
-    @GetMapping("/profile_patient/{patientId}")
-    public String getPatientProfile(@PathVariable Long patientId, Model model) {
+    @GetMapping("/account/{patientId}")
+    public String getPatientAccount(@PathVariable Long patientId, Model model) {
         Patient patient = patientService.getPatientById(patientId);
         if (patient == null) {
             model.addAttribute("message", "Patient not found.");
@@ -314,8 +314,9 @@ public class TestDataController {
         }
         model.addAttribute("patient", patient);
         model.addAttribute("patientId", patientId);  // Add patientId to the model
-        return "profile_patient";
+        return "account";
     }
+
 
     @GetMapping("/fetchTestData/{patientId}")
     @ResponseBody

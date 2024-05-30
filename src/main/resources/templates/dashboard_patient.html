@@ -16,7 +16,7 @@
     <!-- Stylesheets -->
 
     <link rel="stylesheet" href="../assets/css/styles.min.css" />
-    <link rel="stylesheet" href="../assets/css/styles.css" />
+    <link rel="stylesheet" href="../images/assets/css/dashboard.css" />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
@@ -71,9 +71,9 @@
                         <span class="hide-menu">My space</span>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" th:href="@{/profile_patient/{patientId}(patientId=${patientId})}" aria-expanded="false" >
+                        <a class="sidebar-link" th:href="@{account/{patientId}(patientId=${patientId})}" aria-expanded="false" >
                             <span><i class="fas fa-user"></i></span>
-                            <span class="hide-menu">Profile</span>
+                            <span class="hide-menu">Account</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
@@ -202,7 +202,10 @@
                         <div class="card overflow-hidden">
                             <div class="card-body p-4">
                                 <h5 class="card-title mb-9 fw-semibold">QR Code</h5>
-                                <div id="qrCode">Loading...</div>
+                                <div id="qrCode">
+                                    <!-- Display QR code image here -->
+                                    <img id="qrCodeImage" src="" alt="QR Code">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -350,7 +353,7 @@
     };
 
     function fetchPatientInfo(patientId) {
-        fetch(`/api/patients/${patientId}`)
+        fetch(`/api/info/${patientId}`)
             .then(response => {
             if (!response.ok) {
                 throw new Error('Failed to fetch patient information');
@@ -364,16 +367,15 @@
             console.error('Error fetching patient info:', error);
         });
     }
-
     function displayPatientInfo(patientInfo) {
         // Parse the date of birth string into a Date object
-        const dateOfBirth = new Date(patientInfo.dateNaissance);
+        const dateOfBirth = new Date(patientInfo.dateOfBirth); // Change to dateOfBirth
 
         // Calculate age from date of birth
         const age = calculateAge(dateOfBirth);
 
         const patientInfoHtml = `
-        <p>Name: ${patientInfo.nom} ${patientInfo.prenom}</p>
+        <p>Name: ${patientInfo.firstname} ${patientInfo.lastname}</p>
         <p>Age: ${age}</p>
         <p>Address: ${patientInfo.adresse}</p>
     `;
@@ -381,11 +383,11 @@
     }
 
     // Helper function to calculate age from date of birth
-    function calculateAge(birthDate) {
+    function calculateAge(dateOfBirth) {
         const today = new Date();
-        const age = today.getFullYear() - birthDate.getFullYear();
-        const month = today.getMonth() - birthDate.getMonth();
-        if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
+        const age = today.getFullYear() - dateOfBirth.getFullYear();
+        const month = today.getMonth() - dateOfBirth.getMonth();
+        if (month < 0 || (month === 0 && today.getDate() < dateOfBirth.getDate())) {
             return age - 1;
         }
         return age;
@@ -434,6 +436,7 @@
             console.error('No search term provided.');
         }
     }
+
 
 </script>
 </body>

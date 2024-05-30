@@ -322,7 +322,7 @@ public class PatientController {
 
 }
 */
-    @GetMapping("/api/patients/{id}")
+    @GetMapping("/api/info/{id}")
     public ResponseEntity<Patient> getPatientById(@PathVariable Long id) {
         return patientRepository.findById(id)
                 .map(patient -> ResponseEntity.ok().body(patient))

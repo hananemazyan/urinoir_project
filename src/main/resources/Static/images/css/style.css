@@ -1,182 +1,178 @@
 
-    /* POPPINS FONT */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #ffffff;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    font-weight:bold;
+}
 
-*{
-    font-family: 'Poppins', sans-serif;
+/* Container Styles */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
 }
-.wrapper{
-    background: #fff;
-    padding: 0 20px 0 10px;
-}
-.main{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 90vh;
-}
-header {
-    background-color: #fdfeff;
-    color: black;
-    padding: 1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-}
-.logo {
-    display: flex;
-    align-items: center;
-}
-.logo-left {
-    margin-right: auto;
-    margin-left: 2rem; /* Marge à gauche du logo gauche */
-}
-.logo-right {
-    margin-left: auto;
-    margin-right: 2rem; /* Marge à droite du logo droit */
-}
-.logo img {
-    height: 5rem;
-}
-.side-image{
-    background-image:url("Static/images/background.jpg");
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    border-radius: 10px 0 0 10px;
-    position: relative;
-}
-.row{
-    width:  1500px;
-    height:550px;
+
+/* Card Styles */
+.card {
     border-radius: 10px;
-    background: #fff;
-    padding: 0px;
-    box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.2);
-}
-.text{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-.text p{
-    color: #fff;
-    font-size: 20px;
-}
-i{
-    font-weight: 400;
-    font-size: 15px;
-}
-.right{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-}
-.input-box{
-    width: 330px;
-    box-sizing: border-box;
-}
-
-.input-box header{
-    font-weight: 700;
-    text-align: center;
-    margin-bottom: 45px;
-}
-.input-field{
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    padding: 0 10px 0 10px;
-}
-.input{
-    height: 45px;
-    width: 100%;
-    background: transparent;
-    border: none;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-    outline: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    padding: 20px;
     margin-bottom: 20px;
-    color: #40414a;
+    transition: transform 0.3s ease-in-out;
 }
-.input-box .input-field label{
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    pointer-events: none;
-    transition: .5s;
+
+.card:hover {
+    transform: translateY(-5px);
+
 }
-.input-field input:focus ~ label
-{
-    top: -10px;
-    font-size: 13px;
+
+.card-title {
+    margin-bottom: 15px;
+    color: #0A3177;
+    font-weight:bolder;
+
 }
-.input-field input:valid ~ label
-{
-    top: -10px;
-    font-size: 13px;
-    color: #5d5076;
-}
-.input-field .input:focus, .input-field .input:valid{
-    border-bottom: 1px solid #743ae1;
-}
-.submit{
-    border: none;
-    outline: none;
-    height: 45px;
-    background: #ececec;
-    border-radius: 5px;
-    transition: .4s;
-}
-.submit:hover{
-    background: rgba(37, 95, 156, 0.937);
+
+/* Button Styles */
+.btn {
+    background-color: #226275;
     color: #fff;
-}
-.signin{
-    text-align: center;
-    font-size: small;
-    margin-top: 25px;
-}
-span a{
-    text-decoration: none;
-    font-weight: 700;
-    color: #000;
-    transition: .5s;
-}
-span a:hover{
-    text-decoration: underline;
-    color: #000;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-@media only screen and (max-width: 768px){
-    .side-image{
-        border-radius: 10px 10px 0 0;
-    }
-    img{
-        width: 35px;
-        position: absolute;
-        top: 20px;
-        left: 47%;
-    }
-    .text{
-        position: absolute;
-        top: 70%;
-        text-align: center;
-    }
-    .text p, i{
-        font-size: 16px;
-    }
-    .row{
-        max-width:420px;
-        width: 100%;
-    }
-
+.btn:hover {
+    background-color: #095967;
 }
-    .error-message {
-        color: red;
-        font-weight: bold;
-        margin-top: 10px;
-    }
 
+/* Input Styles */
+.form-control {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    width: calc(100% - 90px);
+    margin-right: 10px;
+    transition: border-color 0.3s ease;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #0A3177;
+}
+
+/* Sidebar Styles */
+.left-sidebar {
+    background-color: #ffffff;
+    color: #0b3581;
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-y: auto;
+    transition: width 0.3s ease;
+}
+
+.close-btn {
+    color: #0b3581;
+    cursor: pointer;
+}
+
+/* Header Styles */
+.navbar {
+    background-color: #ffffff;
+    color: #307e95;
+    padding: 10px 20px;
+}
+
+.navbar-nav .nav-link {
+    color: #0b3581;
+    transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #095967;
+}
+
+/* Sidebar Link Hover Styles */
+.sidebar-item:hover .sidebar-link {
+    background-color: #f0f0f0;
+    color: #0b3581;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Hover Effect for Cards */
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+    border: 1px solid #0A3177; /* Add border color on hover */
+}
+
+/* Hover Effect for Navbar Links */
+.navbar-nav .nav-link:hover {
+    color: #095967;
+    transition: color 0.3s ease;
+}
+
+/* Hover Effect for Buttons */
+.btn:hover {
+    background-color: #307e95;
+    transition: background-color 0.3s ease;
+}
+.sidebar-nav {
+    background-color: #ffffff;
+    padding: 15px;
+    border-right: 1px solid #ccc;
+}
+
+.sidebar-nav .sidebar-item {
+    margin-bottom: 10px;
+}
+
+.sidebar-nav .sidebar-link {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 5px;
+    color: #333;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sidebar-nav .sidebar-link:hover {
+    background-color: #f0f0f0;
+    color: #0A3177;
+}
+
+.sidebar-nav .sidebar-link span {
+    margin-right: 10px;
+}
+
+.sidebar-nav .nav-small-cap {
+    margin-top: 20px;
+    font-weight: bold;
+    color: #0A3177;
+}
+
+.sidebar-nav .nav-small-cap span {
+    margin-left: 5px;
+}
+.sidebar-nav ul .sidebar-item.selected > .sidebar-link,
+.sidebar-nav ul .sidebar-item.selected > .sidebar-link.active,
+.sidebar-nav ul .sidebar-item > .sidebar-link.active {
+    background-color: #0b3581; /* Change the background color */
+    color: #ffffff; /* Change the text color */
+}
+.sidebar-nav ul .sidebar-item:hover > .sidebar-link {
+    background-color: #224ca67e; /* Change the hover background color */
+    color: #ffffff; /* Change the hover text color */
+}
+.card-body .text-center {
+    margin-bottom: 0; /* Reset margin-bottom */
+}

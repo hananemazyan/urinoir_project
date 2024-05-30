@@ -1,347 +1,408 @@
-
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <!-- Meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Urinewise</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Graph</title>
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/png" href="/assets/images/logos/logo1.png" />
+    <link rel="shortcut icon" type="image/png" href="../assets/images/logos/favicon.png" />
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Stylesheets -->
+    <!-- Chart.js library -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="/assets/css/styles.min.css" />
-    <link rel="stylesheet" href="/assets/css/styles.css" />
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <!-- html2pdf library for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+
+    <!-- External Stylesheets -->
+    <link rel="stylesheet" href="../assets/css/styles.min.css" />
+    <link rel="stylesheet" href="../images/assets/css/dashboard.css" />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 
+
     <style>
-
         #backButton {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 999;
-            cursor: pointer;
-            background-color: rgba(255, 255, 255, 0.8);
-            border: none;
-            border-radius: 50%;
-            padding: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: fixed; /* Fix the button's position */
+            top: 20px; /* Distance from the top of the viewport */
+            left: 20px; /* Distance from the left of the viewport */
+            z-index: 999; /* Ensure the button appears above other elements */
+            cursor: pointer; /* Show cursor as pointer on hover */
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+            border: none; /* No border */
+            border-radius: 50%; /* Rounded corners to make it circular */
+            padding: 10px; /* Padding around the icon */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Shadow effect */
         }
 
-        #main-wrapper {
-            margin-top: 60px; /* Adjust this value according to your design */
+        /* Align text to the end (right) */
+        .text-end {
+            text-align: end;
         }
 
-        #testDataChart {
-            width: 100%; /* Ensure the chart takes full width */
-            height: auto;
+        /* Align text to the left (for Bootstrap 5) */
+        .text-lg-start {
+            text-align: left !important; /* Adjust to text-start for Bootstrap 5 */
+        }
+
+        /* Container for dropdown elements */
+        .dropdown-container {
+            display: flex; /* Use flexbox for layout */
+            align-items: center; /* Center items vertically */
+        }
+
+        /* Dropdown menu */
+        .dropdown-menu {
+            min-width: 100%; /* Set minimum width to match the container */
+            left: 0; /* Position at the left edge */
+            right: auto; /* Reset right positioning */
+            text-align: center; /* Center align the dropdown items */
+        }
+
+        /* Styling for dropdown toggle button */
+        .dropdown-toggle {
+            border: 2px solid transparent; /* Transparent border */
+            border-radius: 5px; /* Rounded corners */
+            padding: 5px 10px; /* Padding */
+            transition: border-color 0.3s ease-in-out; /* Smooth transition for border color */
+        }
+
+        /* Change border color on hover */
+        .dropdown-toggle:hover {
+            border-color: #333; /* Change to desired hover border color */
+        }
+
+        /* Center card title text */
+        .card-title.text-center {
+            margin-bottom: 0; /* Remove bottom margin */
+        }
+
+        /* Hamburger icon on small screens */
+        @media (max-width: 768px) {
+            .dropdown {
+                position: absolute; /* Position absolutely for small screens */
+                top: 20px; /* Adjust top position */
+                right: 20px; /* Adjust right position */
+            }
+
+            .dropdown-menu {
+                right: 0; /* Align dropdown menu to the right */
+                left: auto; /* Reset left positioning */
+            }
+        }
+
+        /* Set smaller card width */
+        .smaller-card {
+            max-width: 900px; /* Adjust the max-width as needed */
+            margin: 30px 50px; /* Center the card horizontally */
+        }
+
+        /* Larger screen */
+        @media (min-width: 1200px) {
+            .smaller-card {
+                max-width: 1100px; /* Adjust the max-width for larger screens */
+                margin: 40px 60px; /* Center the card horizontally */
+            }
+        }
+
+        /* Even larger screen */
+        @media (min-width: 1400px) {
+            .smaller-card {
+                max-width: 1300px; /* Adjust the max-width for even larger screens */
+                margin: 50px 80px; /* Center the card horizontally */
+            }
+        }
+
+        /* Hide ticket info by default */
+        .ticket-info {
+            display: none; /* Hide by default */
+        }
+
+        /* Styles for printing */
+        @media print {
+            .ticket-info {
+                display: block; /* Display only when printing */
+                font-family: Arial, sans-serif; /* Font family */
+                color: #333; /* Text color */
+                background-color: #fff; /* Background color */
+                padding: 20px; /* Padding */
+                border: 2px solid #000; /* Border */
+                margin-bottom: 2cm; /* Bottom margin */
+                margin-right: 2.5cm; /* Right margin */
+            }
+
+            .ticket-info h5 {
+                text-align: center; /* Center align the heading */
+                color: #007bff; /* Heading color */
+            }
+
+            .signature-place {
+                margin-top: 20px; /* Margin for signature place */
+            }
         }
     </style>
+</head>
 <body>
-<!--  Body Wrapper -->
+<button id="backButton" onclick="goBack()"><i class="fas fa-arrow-left"></i></button>
+<!-- Body Wrapper -->
 <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
      data-sidebar-position="fixed" data-header-position="fixed">
-    <!-- Sidebar Start -->
-    <aside class="left-sidebar">
-        <!-- Sidebar scroll-->
-        <div>
-            <div class="brand-logo d-flex align-items-center justify-content-between">
-                <a href="./index" class="text-nowrap logo-img">
-                    <img src="/assets/images/logos/&.png" width="180" alt="" />
-                </a>
-                <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
-                    <i class="ti ti-x fs-8"></i>
+    <!-- Container for the main content -->
+    <div class="row mb-3">
+        <div class="col-lg-12">
+            <div class="card smaller-card">
+                <div class="card-body" id="ticketInfo">
+                    <h5 class="card-title text-center">Ticket</h5>
+                    <!-- Add your content here -->
+                    <p>Patient Name: <span id="patientName"></span></p>
+                    <p>Device ID: <span id="deviceId"></span></p>
+                    <p>Test Date: <span id="testDate"></span></p>
+                    <p>Max Volume: <span id="maxVolume"></span></p>
+                    <p>Min Volume: <span id="minVolume"></span></p>
+                    <p>Average Volume: <span id="avgVolume"></span></p>
+                </div>
+
+                <div class="col-lg-12 d-flex  justify-content-center">
+                    <button class="btn btn-primary" onclick="downloadTicketPDF()">Download Ticket PDF</button>
                 </div>
             </div>
-            <!-- Sidebar navigation-->
-            <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
-                <ul id="sidebarnav">
-                    <li class="nav-small-cap">
-                        <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                        <span class="hide-menu">Home</span>
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="./index" aria-expanded="false">
-                <span>
-                  <i class="ti ti-layout-dashboard"></i>
-                </span>
-                            <span class="hide-menu">Dashboard</span>
-                        </a>
-                    </li>
-                    <li class="nav-small-cap">
-                        <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                        <span class="hide-menu">UI COMPONENTS</span>
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="./patients" aria-expanded="false">
-                <span>
-                  <i class="ti ti-article"></i>
-                </span>
-                            <span class="hide-menu">Patients List</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="./Historique" aria-expanded="false">
-                <span>
-                  <i class="ti ti-alert-circle"></i>
-                </span>
-                            <span class="hide-menu">History</span>
-                        </a>
-                    </li>
-                    <li class="nav-small-cap">
-                        <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                        <span class="hide-menu">AUTH</span>
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="./login" aria-expanded="false">
-                <span>
-                  <i class="ti ti-login"></i>
-                </span>
-                            <span class="hide-menu">Login</span>
-                        </a>
-                    </li>
-
-                </ul>
-            </nav>
-            <!-- End Sidebar navigation -->
         </div>
-        <!-- End Sidebar scroll-->
-    </aside>
-    <!--  Sidebar End -->
-    <!--  Main wrapper -->
-    <div class="body-wrapper">
-        <!--  Header Start -->
-        <header class="app-header">
-            <nav class="navbar navbar-expand-lg navbar-light">
-                <ul class="navbar-nav">
-                    <li class="nav-item d-block d-xl-none">
-                        <a class="nav-link sidebartoggler nav-icon-hover" id="headerCollapse" href="javascript:void(0)">
-                            <i class="ti ti-menu-2"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link nav-icon-hover" href="javascript:void(0)">
-                            <i class="ti ti-bell-ringing"></i>
-                            <div class="notification bg-primary rounded-circle"></div>
-                        </a>
-                    </li>
-                </ul>
-                <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
-                    <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link nav-icon-hover" href="" id="drop2" data-bs-toggle="dropdown"
-                               aria-expanded="false">
-                                <img src="/assets/images/profile/user-1.jpg" alt="" width="35" height="35" class="rounded-circle">
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
-                                <div class="message-body">
-                                    <a href="" class="d-flex align-items-center gap-2 dropdown-item">
-                                        <i class="ti ti-user fs-6"></i>
-                                        <p class="mb-0 fs-3">My Profile</p>
-                                    </a>
-                                    <a href="" class="d-flex align-items-center gap-2 dropdown-item">
-                                        <i class="ti ti-mail fs-6"></i>
-                                        <p class="mb-0 fs-3">My Account</p>
-                                    </a>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-        </header>
-        <button id="backButton" onclick="goBack()"><i class="fas fa-arrow-left"></i></button>
-        <!-- Body Wrapper -->
-            <!-- Container for the main content -->
-
-
-                <div class="row">
-                    <div class="col-lg-8">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="d-sm-flex d-block align-items-center justify-content-between mb-9">
-                                    <div class="mb-3 mb-sm-0">
-                                        <h5 class="card-title fw-semibold">Graph</h5>
-                                    </div>
-                                </div>
-                                <!-- Chart container -->
-                                <canvas id="testDataChart" width="400" height="200"></canvas>
-                                <!-- Patient Info container -->
-                                <div id="patientInfo" class="patient-info"></div>
-                                <!-- Controls -->
-                                <div class="controls mt-3">
-                                    <button onclick="saveChart()" class="btn btn-primary">Save Chart</button>
-                                    <button onclick="printGraph()" class="btn btn-primary">Print Chart</button>
-                                    <button onclick="downloadData()" class="btn btn-primary">Download Data</button>
-                                    <button onclick="goToDashboard()" class="btn btn-primary">Go to Dashboard</button>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card smaller-card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div>
+                            <h5 class="card-title fw-semibold">Graph</h5>
+                        </div>
+                        <div class="dropdown-container">
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Options
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <button class="dropdown-item" onclick="saveChart()">Save Chart</button>
+                                    <button class="dropdown-item" onclick="printGraph()">Print Chart</button>
+                                    <button class="dropdown-item" onclick="downloadData()">Download Data</button>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <!-- Chart container -->
+                    <canvas id="testDataChart" width="400" height="200"></canvas>
+                    <!-- Patient Info container -->
+                    <div id="patientInfo" class="patient-info"></div>
+                    <!-- Controls -->
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+
 <script>
-            function goBack() {
-                window.history.back();
-            }
+    // Function to navigate back in the browser history
+    function goBack() {
+        window.history.back();
+    }
 
-            // Function to fetch graph data from the server
-            function fetchGraphData(patientId, testId) {
-                return fetch(`/fetchGraphData?patientId=${patientId}&testId=${testId}`)
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
+    // Function to fetch ticket information from the server
+    function fetchTicketInfo(patientId, testId) {
+        return fetch(`/fetchTicketInfo?patientId=${patientId}&testId=${testId}`)
+            .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        });
+    }
+
+    // Function to fetch graph data from the server
+    function fetchGraphData(patientId, testId) {
+        return fetch(`/fetchGraphData?patientId=${patientId}&testId=${testId}`)
+            .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        });
+    }
+
+    // Function to render the graph using Chart.js
+    function renderGraph(graphData) {
+        const ctx = document.getElementById('testDataChart').getContext('2d');
+        const labels = graphData.map(dataPoint => dataPoint[0]);
+        const volumes = graphData.map(dataPoint => dataPoint[1]);
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Volume',
+                    data: volumes,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                        type: 'linear',
+                        position: 'bottom',
+                        title: {
+                            display: true,
+                            text: 'Seconds'
                         }
-                        return response.json();
-                    });
-            }
-
-            // Function to render the graph using Chart.js
-            function renderGraph(graphData) {
-                const ctx = document.getElementById('testDataChart').getContext('2d');
-                const labels = graphData.map(dataPoint => dataPoint[0]);
-                const volumes = graphData.map(dataPoint => dataPoint[1]);
-
-                new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: labels,
-                        datasets: [{
-                            label: 'Volume',
-                            data: volumes,
-                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                            borderColor: 'rgba(75, 192, 192, 1)',
-                            borderWidth: 1
-                        }]
                     },
-                    options: {
-                        scales: {
-                            x: {
-                                type: 'linear',
-                                position: 'bottom',
-                                title: {
-                                    display: true,
-                                    text: 'Seconds'
-                                }
-                            },
-                            y: {
-                                title: {
-                                    display: true,
-                                    text: 'Volume'
-                                }
-                            }
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Volume'
                         }
                     }
-                });
-            }
-
-            function printGraph() {
-                // Open a new window and print the chart
-                const printWin = window.open('', '', 'width=650,height=900');
-                printWin.document.write('<html><head><title>Print Graph</title></head><body>');
-                printWin.document.write('<img src="' + document.getElementById('testDataChart').toDataURL() + '">');
-                printWin.document.write('</body></html>');
-                printWin.document.close();
-
-                // Print the chart after it's loaded
-                printWin.onload = function() {
-                    printWin.print();
-                };
-            }
-
-            function saveChart() {
-                // Retrieve the canvas element
-                const canvas = document.getElementById('testDataChart');
-
-                // Convert the canvas to an image
-                const imgData = canvas.toDataURL('image/png');
-
-                // Create a link element
-                const link = document.createElement('a');
-
-                // Set the href attribute to the image data
-                link.href = imgData;
-
-                // Set the download attribute to specify the filename
-                link.download = 'chart.png';
-
-                // Simulate a click on the link to trigger the download
-                link.click();
-            }
-
-            function downloadData() {
-                // Fetch graph data from the correct endpoint (/fetchGraphData) with patientId and testId
-                const urlParams = new URLSearchParams(window.location.search);
-                const patientId = urlParams.get('patientId');
-                const testId = urlParams.get('testId');
-
-                if (!patientId || !testId) {
-                    console.error('Patient ID or Test ID is missing in the URL');
-                    return;
                 }
-
-                fetch(`/fetchGraphData?patientId=${patientId}&testId=${testId}`)
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }
-                        return response.json();
-                    })
-                    .then(graphData => {
-                        // Convert the graph data to JSON string
-                        const jsonData = JSON.stringify(graphData);
-
-                        // Create a Blob object containing the JSON data
-                        const blob = new Blob([jsonData], { type: 'application/json' });
-
-                        // Create a link element
-                        const link = document.createElement('a');
-
-                        // Set the href attribute to the Blob object
-                        link.href = URL.createObjectURL(blob);
-
-                        // Set the download attribute to specify the filename
-                        link.download = 'graph_data.json';
-
-                        // Simulate a click on the link to trigger the download
-                        link.click();
-                    })
-                    .catch(error => {
-                        console.error('Error fetching graph data:', error);
-                    });
             }
+        });
+    }
 
-            function goToDashboard() {
-                window.location.href = '/index'; // Replace '/dashboard' with your actual dashboard URL
+    // Function to print the graph
+    function printGraph() {
+        // Open a new window and print the chart
+        const printWin = window.open('', '', 'width=650,height=900');
+        printWin.document.write('<html><head><title>Print Graph</title></head><body>');
+        printWin.document.write('<img src="' + document.getElementById('testDataChart').toDataURL() + '">');
+        printWin.document.write('</body></html>');
+        printWin.document.close();
+
+        // Print the chart after it's loaded
+        printWin.onload = function() {
+            printWin.print();
+        };
+    }
+
+    // Function to save the chart as an image
+    function saveChart() {
+        // Retrieve the canvas element
+        const canvas = document.getElementById('testDataChart');
+
+        // Convert the canvas to an image
+        const imgData = canvas.toDataURL('image/png');
+
+        // Create a link element
+        const link = document.createElement('a');
+
+        // Set the href attribute to the image data
+        link.href = imgData;
+
+        // Set the download attribute to specify the filename
+        link.download = 'chart.png';
+
+        // Simulate a click on the link to trigger the download
+        link.click();
+    }
+
+    // Function to download graph data as JSON
+    function downloadData() {
+        // Fetch graph data from the server with patientId and testId
+        const urlParams = new URLSearchParams(window.location.search);
+        const patientId = urlParams.get('patientId');
+        const testId = urlParams.get('testId');
+
+        if (!patientId || !testId) {
+            console.error('Patient ID or Test ID is missing in the URL');
+            return;
+        }
+
+        fetch(`/fetchGraphData?patientId=${patientId}&testId=${testId}`)
+            .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
             }
+            return response.json();
+        })
+            .then(graphData => {
+            // Convert the graph data to JSON string
+            const jsonData = JSON.stringify(graphData);
 
-            document.addEventListener("DOMContentLoaded", function() {
-                const urlParams = new URLSearchParams(window.location.search);
-                const patientId = urlParams.get('patientId');
-                const testId = urlParams.get('testId');
+            // Create a Blob object containing the JSON data
+            const blob = new Blob([jsonData], { type: 'application/json' });
 
-                if (!patientId || !testId) {
-                    console.error('Patient ID or Test ID is missing in the URL');
-                    return;
-                }
+            // Create a link element
+            const link = document.createElement('a');
 
-                fetchGraphData(patientId, testId)
-                    .then(renderGraph)
-                    .catch(error => {
-                        console.error('Error fetching graph data:', error);
-                    });
-            });
-        </script>
-<script src="/assets/libs/jquery/dist/jquery.min.js"></script>
-<script src="/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="/assets/js/sidebarmenu.js"></script>
-<script src="/assets/js/app.min.js"></script>
-<script src="/assets/js/dashboard.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+            // Set the href attribute to the Blob object
+            link.href = URL.createObjectURL(blob);
 
+            // Set the download attribute to specify the filename
+            link.download = 'graph_data.json';
+
+            // Simulate a click on the link to trigger the download
+            link.click();
+        })
+            .catch(error => {
+            console.error('Error fetching graph data:', error);
+        });
+    }
+
+    // Function to redirect to the dashboard page
+    function goToDashboard() {
+        window.location.href = '/dashboard'; // Replace '/dashboard' with your actual dashboard URL
+    }
+
+    // Event listener to fetch data and render graph on page load
+    document.addEventListener("DOMContentLoaded", function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const patientId = urlParams.get('patientId');
+        const testId = urlParams.get('testId');
+
+        if (!patientId || !testId) {
+            console.error('Patient ID or Test ID is missing in the URL');
+            return;
+        }
+
+        fetchTicketInfo(patientId, testId)
+            .then(ticketInfo => {
+            // Populate ticket information on the page
+            document.getElementById('patientName').textContent = ticketInfo.patientName + ' ' + ticketInfo.patientLastName;
+            document.getElementById('deviceId').textContent = ticketInfo.deviceId;
+            document.getElementById('testDate').textContent = ticketInfo.testDate;
+            document.getElementById('maxVolume').textContent = ticketInfo.maxVolume;
+            document.getElementById('minVolume').textContent = ticketInfo.minVolume;
+            document.getElementById('avgVolume').textContent = ticketInfo.avgVolume;
+        })
+            .catch(error => {
+            console.error('Error fetching ticket info:', error);
+        });
+
+        fetchGraphData(patientId, testId)
+            .then(renderGraph) // Render the graph with fetched data
+            .catch(error => {
+            console.error('Error fetching graph data:', error);
+        });
+    });
+
+    // Function to download ticket information as PDF
+    function downloadTicketPDF() {
+        const ticketInfo = document.getElementById('ticketInfo');
+
+        // Create a new instance of html2pdf
+        const pdf = new html2pdf(ticketInfo, {
+            margin: [20, 25], // Adjust margin as needed (in millimeters)
+            filename: 'ticket.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { dpi: 192, letterRendering: true },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+            pagebreak: { mode: 'avoid-all' }, // Optional: prevent page breaks within elements
+            html2pdf: { watermark: [{ text: 'Your Watermark', opacity: 0.2 }] } // Optional: add watermark
+        });
+
+        // Generate the PDF
+        pdf.save();
+    }
+</script>
 </body>
 </html>

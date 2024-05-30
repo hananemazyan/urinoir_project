@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <!-- Meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Urinewise | Profile </title>
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/png" href="../assets/images/logos/favicon.png" />
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Highcharts library -->
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+  <!-- Stylesheets -->
+
+  <link rel="stylesheet" href="../assets/css/styles.min.css" />
+  <link rel="stylesheet" href="../images/assets/css/dashboard.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* Hover effect for editable mode */
+    .editable-hover:hover {
+      background-color: #f0f0f0;
+    }
+    .error-message {
+      color: red;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+     data-sidebar-position="fixed" data-header-position="fixed">
+  <aside class="left-sidebar">
+    <!-- Sidebar scroll-->
+    <div>
+      <div class="brand-logo d-flex align-items-center justify-content-between">
+        <!-- Logo -->
+        <a href="./index.html" class="text-nowrap logo-img">
+          <img src="../assets/image/logos/dark-logo.svg" width="180" alt="" />
+        </a>
+        <!-- Sidebar toggler -->
+        <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
+          <i class="fas fa-times fs-8"></i>
+        </div>
+      </div>
+      <!-- Sidebar navigation -->
+      <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
+        <!-- Sidebar items -->
+        <ul id="sidebarnav">
+          <!-- Home section -->
+          <li class="nav-small-cap">
+            <i class="fas fa-ellipsis-h nav-small-cap-icon fs-4"></i>
+            <span class="hide-menu">Home</span>
+          </li>
+          <!-- Dashboard -->
+          <li class="sidebar-item">
+            <a class="sidebar-link" th:href="@{'/dashboard_patient?patientId=' + ${patientId}}" aria-expanded="false">
+              <span><i class="fas fa-columns"></i></span>
+              <span class="hide-menu">Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-small-cap">
+            <i class="fas fa-ellipsis-h nav-small-cap-icon fs-4"></i>
+            <span class="hide-menu">My space</span>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" th:href="@{account/{patientId}(patientId=${patientId})}" aria-expanded="false" >
+              <span><i class="fas fa-user"></i></span>
+              <span class="hide-menu">Account</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" th:href="@{/history/{patientId}(patientId=${patientId})}" aria-expanded="false">
+              <span><i class="fas fa-history"></i></span>
+              <span class="hide-menu">History</span>
+            </a>
+          </li>
+          <!-- Reports -->
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="./ui-card.html" aria-expanded="false">
+              <span><i class="fas fa-file-medical"></i></span>
+              <span class="hide-menu">Reports</span>
+            </a>
+          </li>
+          <!-- Settings -->
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="./ui-forms.html" aria-expanded="false">
+              <span><i class="fas fa-cogs"></i></span>
+              <span class="hide-menu">Settings</span>
+            </a>
+          </li>
+          <!-- Authentication section -->
+          <li class="nav-small-cap">
+            <i class="fas fa-ellipsis-h nav-small-cap-icon fs-4"></i>
+            <span class="hide-menu">AUTH</span>
+          </li>
+          <!-- Sign Out -->
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="./authentication-login.html" aria-expanded="false">
+              <span><i class="fas fa-sign-out-alt"></i></span>
+              <span class="hide-menu">Sign Out</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <!-- End Sidebar navigation -->
+    </div>
+    <!-- End Sidebar scroll-->
+  </aside>
+  <div class="body-wrapper">
+    <header class="app-header">
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <ul class="navbar-nav">
+          <li class="nav-item d-block d-xl-none">
+            <a class="nav-link sidebartoggler nav-icon-hover" id="headerCollapse" href="javascript:void(0)">
+              <i class="fas fa-bars"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link nav-icon-hover" href="javascript:void(0)">
+              <i class="fas fa-search"></i>
+              <div class="notification bg-primary rounded-circle"></div>
+            </a>
+          </li>
+        </ul>
+        <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
+          <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card w-100">
+            <div class="card-body">
+              <h5 class="card-title fw-semibold">Patient Profile</h5>
+              <div class="table-responsive" id="profileInfo">
+                <table class="table">
+                  <tbody>
+                  <tr class="editable-hover">
+                    <th scope="row">Last Name</th>
+                    <td contenteditable="false" id="lastname" th:text="${patient.lastname}"></td>
+                    <td><span class="error-message" id="lastnameError"></span></td>
+                  </tr>
+                  <tr class="editable-hover">
+                    <th scope="row">First Name</th>
+                    <td contenteditable="false" id="firstname" th:text="${patient.firstname}"></td>
+                    <td><span class="error-message" id="firstnameError"></span></td>
+                  </tr>
+                  <tr class="editable-hover">
+                    <th scope="row">Birth Date</th>
+                    <td  contenteditable="false" id="dateOfBirth" th:text="${patient.dateOfBirth}"></td>
+                    <td><span class="error-message" id="dateOfBirthError"></span></td>
+                  </tr>
+                  <tr class="editable-hover">
+                    <th scope="row">Email</th>
+                    <td contenteditable="false" id="email" th:text="${patient.email}"></td>
+                    <td><span class="error-message" id="emailError"></span></td>
+                  </tr>
+                  <tr class="editable-hover">
+                    <th scope="row">Phone</th>
+                    <td contenteditable="false" id="phone" th:text="${patient.telephone}"></td>
+                    <td><span class="error-message" id="phoneError"></span></td>
+                  </tr>
+
+                  </tbody>
+                </table>
+              </div>
+              <div class="mt-4">
+                <a href="javascript:history.back()" class="btn btn-secondary">Back</a>
+                <button id="editProfileBtn" class="btn btn-primary">Edit Profile</button>
+                <button id="saveChangesBtn" class="btn btn-primary" style="display:none;">Save Changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer text-center mt-5">
+  <div class="container">
+    <span class="text-muted">&copy; 2024 Urinewise. All rights reserved.</span>
+  </div>
+</footer>
+<!-- JavaScript includes -->
+<script src="../assets/libs/jquery/dist/jquery.min.js"></script>
+<script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/js/sidebarmenu.js"></script>
+<script src="../assets/js/app.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    // Edit button click event
+    $('#editProfileBtn').click(function () {
+      toggleEditing(true); // Enable editing
+    });
+
+    // Save button click event
+    $('#saveChangesBtn').click(function () {
+      if (validateForm()) {
+        saveChanges();
+        toggleEditing(false); // Disable editing after saving changes
+      }
+    });
+
+    // Cancel button click event
+    $('#cancelButton').click(function () {
+      // Reset fields to original values
+      resetFields();
+      toggleEditing(false); // Disable editing
+    });
+
+    // Function to toggle editing mode
+    function toggleEditing(isEditing) {
+      const profileInfoElements = document.querySelectorAll('#profileInfo [contenteditable]');
+      profileInfoElements.forEach(function(element) {
+        element.contentEditable = isEditing;
+      });
+
+      // Show/hide buttons based on editing mode
+      $('#editProfileBtn').toggle(!isEditing);
+      $('#saveChangesBtn').toggle(isEditing);
+      $('#cancelButton').toggle(isEditing);
+    }
+
+    // Validation function
+    function validateForm() {
+      let isValid = true;
+      $('.error-message').text('');
+
+      // Validate name
+      if (!validateName($('#lastname').text())) {
+        isValid = false;
+      }
+
+      // Validate first name
+      if (!validateFirstName($('#firstname').text())) {
+        isValid = false;
+      }
+
+      // Validate birth date
+      if (!validateBirthDate($('#dateOfBirth').text())) {
+        isValid = false;
+      }
+
+      // Validate email
+      if (!validateEmail($('#email').text())) {
+        isValid = false;
+      }
+
+      // Validate phone number
+      if (!validatePhone($('#phone').text())) {
+        isValid = false;
+      }
+
+      return isValid;
+    }
+
+    // Validation functions
+    function validateName(name) {
+      const nameRegex = /^[a-zA-Z\s]+$/;
+      const nameError = $('#lastnameError');
+
+      if (!nameRegex.test(name)) {
+        nameError.text('Please enter a valid name (only alphabets and spaces are allowed).');
+        return false;
+      } else {
+        nameError.text('');
+        return true;
+      }
+    }
+
+    function validateFirstName(firstName) {
+      const nameRegex = /^[a-zA-Z\s]+$/;
+      const firstNameError = $('#firstnameError');
+
+      if (!nameRegex.test(firstName)) {
+        firstNameError.text('Please enter a valid first name (only alphabets and spaces are allowed).');
+        return false;
+      } else {
+        firstNameError.text('');
+        return true;
+      }
+    }
+
+
+    // Function to validate birth date
+    function validateBirthDate() {
+      const birthDateField = document.getElementById('dateOfBirth');
+      const birthDateError = document.getElementById('dateOfBirthError');
+      const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+
+      if (!dateRegex.test(birthDateField.innerText)) {
+        birthDateError.innerText = 'Please enter a valid date in the format YYYY-MM-DD.';
+        return false;
+      } else {
+        const dateParts = birthDateField.innerText.split('-');
+        const year = parseInt(dateParts[0]);
+        const month = parseInt(dateParts[1]);
+        const day = parseInt(dateParts[2]);
+
+        // Check if month is valid (1-12)
+        if (month < 1 || month > 12) {
+          birthDateError.innerText = 'Please enter a valid month (1-12).';
+          return false;
+        }
+
+        // Check if day is valid for the given month
+        const daysInMonth = new Date(year, month, 0).getDate(); // Get the number of days in the month
+        if (day < 1 || day > daysInMonth) {
+          birthDateError.innerText = 'Please enter a valid day for the selected month.';
+          return false;
+        }
+
+        // Optionally, you can add validation for the year here
+
+        birthDateError.innerText = '';
+        return true;
+      }
+    }
+
+
+    function validateEmail(email) {
+      const emailError = $('#emailError');
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if (!emailRegex.test(email)) {
+        emailError.text('Please enter a valid email address.');
+        return false;
+      } else {
+        emailError.text('');
+        return true;
+      }
+    }
+
+    function validatePhone(phone) {
+      const phoneError = $('#phoneError');
+      const phoneRegex = /^\d+$/;
+
+      if (!phoneRegex.test(phone)) {
+        phoneError.text('Please enter digits only.');
+        return false;
+      } else {
+        phoneError.text('');
+        return true;
+      }
+    }
+
+    // Save changes function
+    function saveChanges() {
+      // Save changes logic here
+
+      // Optionally, provide feedback to the user that changes have been saved
+      alert('Changes saved successfully!');
+    }
+
+    // Function to reset fields to original values
+    function resetFields() {
+      $('#lastname').text($('#lastname').data('value'));
+      $('#firstname').text($('#firstname').data('value'));
+      $('#dateOfBirth').text($('#dateOfBirth').data('value'));
+      $('#email').text($('#email').data('value'));
+      $('#phone').text($('#phone').data('value'));
+    }
+  });
+
+
+</script>
+</body>
+</html>

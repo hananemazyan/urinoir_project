@@ -89,27 +89,28 @@ public class SecurityConfig {
                     registry.requestMatchers("/secretaires/edit/{id}").hasRole("ADMIN");
                     registry.requestMatchers("/secretaires/{id}").hasRole("ADMIN");
                     registry.requestMatchers("/users-profile/**").hasRole("ADMIN");
-                    registry.requestMatchers("/profile/**").hasRole("ADMIN");
+                   // registry.requestMatchers("/profile/**").hasRole("ADMIN");
 
 
 
 
                     registry.requestMatchers("/dashboard_patient/{patientId}").permitAll();
                     registry.requestMatchers("/dashboard_patient").permitAll();
+                    registry.requestMatchers("/addTestData/**").permitAll();
                     registry.requestMatchers("/fetchDashboardData").permitAll();
                     registry.requestMatchers("/viewGraph").permitAll();
                     registry.requestMatchers("/fetchGraphDataById").permitAll();
                     registry.requestMatchers("/fetchGraphData").permitAll();
-                    registry.requestMatchers("/profile_patient/{patientId}").permitAll();
+                    registry.requestMatchers("/account/{patientId}").permitAll();
                     registry.requestMatchers("/history/{patientId}").permitAll();
                     registry.requestMatchers("/fetchTestData/{patientId}").permitAll();
                     registry.requestMatchers("/fetchTicketInfo").permitAll();
-                    registry.requestMatchers("/api/patients/{id}").permitAll();
+                    registry.requestMatchers("/api/referenceData").permitAll();
+                    registry.requestMatchers("/api/info/*").permitAll();
                     registry.requestMatchers("/patients/new").permitAll();
                     registry.requestMatchers("/live").permitAll();
 
-
-
+                    registry.requestMatchers("/ws/**", "/topic/testData", "/app/**").permitAll();
                     registry.anyRequest().authenticated();
 
 

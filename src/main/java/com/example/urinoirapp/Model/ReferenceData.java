@@ -1,6 +1,5 @@
 package com.example.urinoirapp.Model;
 
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,16 +16,16 @@ public class ReferenceData {
 
     private double volume; // Volume urine en millilitres
 
-    private double time; // Temps associé au volume (en seconds)
+    private double second; // Temps associé au volume (en seconds)
 
     // Constructeur par défaut
     public ReferenceData() {
     }
 
     // Constructeur avec paramètres
-    public ReferenceData(double volume, double time) {
+    public ReferenceData(double volume, double second) {
         this.volume = volume;
-        this.time = time;
+        this.second = second;
     }
 
     // Getters and setters
@@ -46,11 +45,11 @@ public class ReferenceData {
         this.volume = volume;
     }
 
-    public double getTime() {
-        return time;
+    public double getSecond() {
+        return second;
     }
 
-    public void setTime(double time) {
-        this.time = time;
+    public void setSecond(double second) {
+        this.second = second;
     }
 }
