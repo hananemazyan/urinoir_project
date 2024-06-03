@@ -94,7 +94,9 @@ public class SecurityConfig {
 
 
 
+
                     registry.requestMatchers("/dashboard_patient/{patientId}").permitAll();
+                      registry.requestMatchers("/index").permitAll();
                     registry.requestMatchers("/dashboard_patient").permitAll();
                     registry.requestMatchers("/addTestData/**").permitAll();
                     registry.requestMatchers("/fetchDashboardData").permitAll();
