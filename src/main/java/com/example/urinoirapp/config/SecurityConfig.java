@@ -1,9 +1,8 @@
 package com.example.urinoirapp.config;
 
 
-
 import com.example.urinoirapp.Repository.AdminRepository;
-import com.example.urinoirapp.Service.AdminService;
+
 import com.example.urinoirapp.Service.CustomUserDetails;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -89,11 +88,23 @@ public class SecurityConfig {
                     registry.requestMatchers("/secretaires/edit/{id}").hasRole("ADMIN");
                     registry.requestMatchers("/secretaires/{id}").hasRole("ADMIN");
                     registry.requestMatchers("/users-profile/**").hasRole("ADMIN");
-                   // registry.requestMatchers("/profile/**").hasRole("ADMIN");
 
 
 
 
+                   registry.requestMatchers("/patients/{id}/qr-code-url").permitAll ();
+                    registry.requestMatchers("/patients/{id}/qr").permitAll();
+
+
+                    registry.requestMatchers("/history/").permitAll();
+                    registry.requestMatchers("/index").permitAll();
+                   registry.requestMatchers("/patients").permitAll();
+                    registry.requestMatchers("/patients/{id}/").permitAll();
+                    registry.requestMatchers("/loginusers").permitAll();
+                    registry.requestMatchers("/UrinWise").permitAll();
+                    registry.requestMatchers("/loginPatient").permitAll();
+                    registry.requestMatchers("/loginMedecin").permitAll();
+                    registry.requestMatchers("/testHistory/**").permitAll();
                     registry.requestMatchers("/dashboard_patient/{patientId}").permitAll();
                     registry.requestMatchers("/dashboard_patient").permitAll();
                     registry.requestMatchers("/addTestData/**").permitAll();

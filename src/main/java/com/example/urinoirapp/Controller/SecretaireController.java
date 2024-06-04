@@ -104,6 +104,11 @@ public class SecretaireController {
         }
         return "login"; // Indicate that no user is currently logged in
     }
+    @GetMapping("/loginusers")
+    public String showLoginForm(Model model) {
+        model.addAttribute("Secretaire", new Secretaire ());
+        return "loginusers";
+    }
 }
 
 

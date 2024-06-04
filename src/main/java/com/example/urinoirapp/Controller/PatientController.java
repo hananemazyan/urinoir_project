@@ -1,10 +1,7 @@
 package com.example.urinoirapp.Controller;
 
 
-import com.example.urinoirapp.Model.Device;
-import com.example.urinoirapp.Model.Patient;
-import com.example.urinoirapp.Model.Secretaire;
-import com.example.urinoirapp.Model.TestData;
+import com.example.urinoirapp.Model.*;
 import com.example.urinoirapp.Repository.PatientRepository;
 import com.example.urinoirapp.Service.DeviceService;
 import com.example.urinoirapp.Service.PatientService;
@@ -92,7 +89,9 @@ public class PatientController {
         Patient savedPatient = patientService.savePatient(patient);
 
         // Generate QR code for the patient
-        String qrCodePath = "src/main/resources/QR_code_Images/" + savedPatient.getId() + "_QRCode.png";
+        String qrCodePath = "C:\\Users\\D\\Desktop\\admin\\urinoir_projects\\src\\main\\resources\\Static\\images\\" + savedPatient.getId() + "_QRCode.png";
+//        String qrCodePath = "C:\\Users\\D\\Desktop\\admin\\urinoir_projects\\src\\main\\resources\\Static\\qrcodeImages\\" + savedPatient.getId() + "_QRCode.png";
+
         try {
 //            qrCodeGenerator.generateQRCode(savedPatient.getId(), savedPatient.getSerialCode(), qrCodePath, 200, 200);
             qrCodeGenerator.generateQRCode(savedPatient.getId(), savedPatient.getSerialCode(), qrCodePath, 200, 200);
@@ -191,14 +190,6 @@ public class PatientController {
 
     private String generateQrCodeUrl(Patient patient) {
         return "/images/" + patient.getId() + "_QRCode.png";
-    }
-
-
-
-    @GetMapping("/loginusers")
-    public String showLoginForm(Model model) {
-        model.addAttribute("Secretaire", new Secretaire ());
-        return "loginusers";
     }
 
     @GetMapping("/patient/{id}")
@@ -327,6 +318,11 @@ public class PatientController {
         return patientRepository.findById(id)
                 .map(patient -> ResponseEntity.ok().body(patient))
                 .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+    @GetMapping("/loginPatient")
+    public String LoginForm(Model model) {
+        model.addAttribute("Patient", new Patient ());
+        return "loginPatient";
     }
 }
 

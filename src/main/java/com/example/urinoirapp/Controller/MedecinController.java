@@ -2,6 +2,7 @@ package com.example.urinoirapp.Controller;
 
 
 import com.example.urinoirapp.Model.Medecin;
+import com.example.urinoirapp.Model.Secretaire;
 import com.example.urinoirapp.Repository.AdminRepository;
 import com.example.urinoirapp.Service.EmailService;
 import com.example.urinoirapp.service.MedecinService;
@@ -110,6 +111,12 @@ public class MedecinController {
 			}
 		}
 		return "login"; // Indicate that no user is currently logged in
+	}
+
+	@GetMapping("/loginMedecin")
+	public String showLoginForm(Model model) {
+		model.addAttribute("Medecin", new Medecin ());
+		return "loginMedecin";
 	}
 }
 

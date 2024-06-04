@@ -1,0 +1,177 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #ffffff;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    font-weight:bold;
+}
+
+/* Container Styles */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Card Styles */
+.card {
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+
+}
+
+.card-title {
+    margin-bottom: 15px;
+    color: #0A3177;
+    font-weight:bolder;
+
+}
+
+/* Button Styles */
+.btn {
+    background-color: #226275;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #095967;
+}
+
+/* Input Styles */
+.form-control {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    width: calc(100% - 90px);
+    margin-right: 10px;
+    transition: border-color 0.3s ease;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #0A3177;
+}
+
+/* Sidebar Styles */
+.left-sidebar {
+    background-color: #ffffff;
+    color: #0b3581;
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-y: auto;
+    transition: width 0.3s ease;
+}
+
+.close-btn {
+    color: #0b3581;
+    cursor: pointer;
+}
+
+/* Header Styles */
+.navbar {
+    background-color: #ffffff;
+    color: #307e95;
+    padding: 10px 20px;
+}
+
+.navbar-nav .nav-link {
+    color: #0b3581;
+    transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #095967;
+}
+
+/* Sidebar Link Hover Styles */
+.sidebar-item:hover .sidebar-link {
+    background-color: #f0f0f0;
+    color: #0b3581;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Hover Effect for Cards */
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+    border: 1px solid #0A3177; /* Add border color on hover */
+}
+
+/* Hover Effect for Navbar Links */
+.navbar-nav .nav-link:hover {
+    color: #095967;
+    transition: color 0.3s ease;
+}
+
+/* Hover Effect for Buttons */
+.btn:hover {
+    background-color: #307e95;
+    transition: background-color 0.3s ease;
+}
+.sidebar-nav {
+    background-color: #ffffff;
+    padding: 15px;
+    border-right: 1px solid #ccc;
+}
+
+.sidebar-nav .sidebar-item {
+    margin-bottom: 10px;
+}
+
+.sidebar-nav .sidebar-link {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 5px;
+    color: #333;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sidebar-nav .sidebar-link:hover {
+    background-color: #f0f0f0;
+    color: #0A3177;
+}
+
+.sidebar-nav .sidebar-link span {
+    margin-right: 10px;
+}
+
+.sidebar-nav .nav-small-cap {
+    margin-top: 20px;
+    font-weight: bold;
+    color: #0A3177;
+}
+
+.sidebar-nav .nav-small-cap span {
+    margin-left: 5px;
+}
+.sidebar-nav ul .sidebar-item.selected > .sidebar-link,
+.sidebar-nav ul .sidebar-item.selected > .sidebar-link.active,
+.sidebar-nav ul .sidebar-item > .sidebar-link.active {
+    background-color: #0b3581; /* Change the background color */
+    color: #ffffff; /* Change the text color */
+}
+.sidebar-nav ul .sidebar-item:hover > .sidebar-link {
+    background-color: #224ca67e; /* Change the hover background color */
+    color: #ffffff; /* Change the hover text color */
+}
+.card-body .text-center {
+    margin-bottom: 0; /* Reset margin-bottom */
+}

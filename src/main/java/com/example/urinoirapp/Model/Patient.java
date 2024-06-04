@@ -25,6 +25,15 @@ public class Patient {
     private String Email;
     private String Role;
 
+    public String getPassword() {
+        return Password;
+    }
+
+    public void setPassword(String password) {
+        Password = password;
+    }
+
+    private String Password;
 
     @Enumerated(EnumType.STRING)
     private HealthProblem healthProblem;
